@@ -33,3 +33,4 @@ obj/
 # Allow installer output folder and its contents
 !installer-output/
 !installer-output/**
+installer-output/NotNaraka-Launcher-Setup-v1.0.0.exe
