@@ -1,6 +1,6 @@
 # 🎯 NotNaraka Launcher
 
-**Advanced anti-cheat detection system for Naraka Bladepoint with real-time monitoring and Discord integration.**
+**Naraka Bladepoint launcher with Client Swap, Tweaks, and Auto-Updating Properties!**
 
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.txt)
 [![Release](https://img.shields.io/github/v/release/NotRatz/NotNaraka-Launcher)](https://github.com/NotRatz/NotNaraka-Launcher/releases)
@@ -17,24 +17,6 @@
 1. Download NotNaraka-Launcher-Setup-v1.0.0.exe
 2. Run installer as Administrator
 3. Follow setup wizard
-4. Configure Discord webhook (see [WEBHOOK_SETUP.md](WEBHOOK_SETUP.md))
-
-### ⚡ Features
-
-- 🔍 **Real-Time Detection** - Zero lag, instant alerts (< 1 second)
-- 🎮 **Multi-Platform** - Steam (95%), Epic (80%), NetEase (75%) = ~87% coverage
-- 📢 **Discord Integration** - Rich embeds with player account info
-- 🛡️ **Smart Whitelist** - 40+ legitimate apps (no false positives)
-- ⚡ **Zero Impact** - ~0% CPU, event-driven monitoring
-
-### 🎯 What Gets Detected
-
-- **CYZ.exe** (popular cheat tool)
-- **CheatEngine** (all variants)
-- **DLL Injectors** (extremeinjector, dllinjector, etc.)
-- **Code Injectors** & suspicious processes
-
----
 
 ## 📚 Documentation
 
@@ -48,16 +30,12 @@
 
 ### What We Collect
 ✅ Platform info (Steam/Epic/NetEase)  
-✅ Account identifiers (for Discord alerts)  
-✅ Process names (cheat detection only)  
 
 ### What We DON'T Collect
 ❌ Passwords or tokens  
 ❌ Personal messages  
 ❌ Payment information  
 ❌ Game data  
-
-**All data sent to YOUR Discord webhook only - no third parties.**
 
 ---
 
@@ -89,9 +67,7 @@ Please include:
 
 ## 🔒 Why No Source Code?
 
-**Source code is kept private to prevent anti-cheat bypass attempts.**
-
-This is standard practice for anti-cheat software. Making detection methods public would allow cheat developers to create bypasses, defeating the purpose.
+**Source code is kept private to keep API keys hidden.**
 
 Only the installer and documentation are publicly available.
 
@@ -107,7 +83,7 @@ Copyright (c) 2025 NotRatz
 
 ## ⭐ Support the Project
 
-If NotNaraka Launcher helps keep your Naraka games fair, please:
+If NotNaraka Launcher helps keep your Naraka performing well, please:
 
 - ⭐ **Star this repository**
 - 🐛 **Report issues** you encounter
