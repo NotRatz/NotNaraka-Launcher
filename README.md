@@ -21,7 +21,6 @@
 ## 📚 Documentation
 
 - **[Quick Start Guide](QUICKSTART.md)** - Get running in 5 minutes
-- **[Webhook Setup](WEBHOOK_SETUP.md)** - Discord configuration
 - **[Releases](https://github.com/NotRatz/NotNaraka-Launcher/releases)** - Download installer
 
 ---
