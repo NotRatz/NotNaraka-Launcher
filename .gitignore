@@ -30,14 +30,6 @@ obj/
 !installer-setup.iss
 !.gitignore
 
-# Allow Assets folder (if it contains public assets)
-!Assets/
-Assets/**
-!Assets/README.md
-!Assets/*.png
-!Assets/*.ico
-
-Assets/background.png
-Assets/icon.ico
-Assets/icon.png
-Assets/titlebar.png
+# Allow installer output folder and its contents
+!installer-output/
+!installer-output/**
