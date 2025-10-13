@@ -1,18 +1,39 @@
-Clear-PowerShellForensics.ps1
-Clear-PowerShellLogs.ps1
-Create-CheatTest.ps1
-FALSE_POSITIVE_README.md
-Find-CyzLocation.ps1
-Find-Lockout-Simple.ps1
-Find-LockoutKey.ps1
-IMPROVEMENTS_V2.md
-REMOVE_TIMER_SERVICE.md
-Test-CheatDetection.ps1
-Test-CreateLockout.ps1
-Test-LockoutMechanism.ps1
-Test-RegistryLock.ps1
-Test-TriggerDetection.ps1
-Test-Webhook-Simple.ps1
-Test-Webhook.ps1
-FIX_AUDIO_ISSUES.md
-ICON.png
+# =========================
+# .NET Build Artifacts
+# =========================
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+# =========================
+# NotNaraka Release - Public Repository
+# =========================
+
+# Keep only these files for public distribution:
+# - README.md (project overview)
+# - LICENSE.txt (MIT license)
+# - QUICKSTART.md (user guide)
+# - WEBHOOK_SETUP.md (setup instructions)
+# - installer-setup.iss (installer source for transparency)
+# - .gitignore (this file)
+
+# Hide everything else (source code, build scripts, etc.)
+*
+
+# Explicitly allow public files
+!README.md
+!LICENSE.txt
+!QUICKSTART.md
+!WEBHOOK_SETUP.md
+!installer-setup.iss
+!.gitignore
+
+# Allow Assets folder (if it contains public assets)
+!Assets/
+Assets/**
+!Assets/README.md
+!Assets/*.png
+!Assets/*.ico
+

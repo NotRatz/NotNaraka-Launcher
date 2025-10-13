@@ -1,4 +1,0 @@
-C:\Users\Ratz\Desktop\NotNaraka Launcher\Distribution\Launcher\NarakaTweaks.AntiCheat.pdb
-C:\Users\Ratz\Desktop\NotNaraka Launcher\Distribution\Launcher\NarakaTweaks.Core.pdb
-C:\Users\Ratz\Desktop\NotNaraka Launcher\Distribution\Launcher\Launcher.Shared.pdb
-C:\Users\Ratz\Desktop\NotNaraka Launcher\Distribution\Launcher\NarakaTweaks.Launcher.exe
