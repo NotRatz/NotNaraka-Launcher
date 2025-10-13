@@ -37,3 +37,7 @@ Assets/**
 !Assets/*.png
 !Assets/*.ico
 
+Assets/background.png
+Assets/icon.ico
+Assets/icon.png
+Assets/titlebar.png
