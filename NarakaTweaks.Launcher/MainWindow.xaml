@@ -1,0 +1,300 @@
+<Window x:Class="NarakaTweaks.Launcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="NotNaraka Launcher" 
+        Height="800" Width="1000"
+        MinHeight="800" MaxHeight="800"
+        MinWidth="1000" MaxWidth="1000"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+    
+    <!-- Outer border for window shadow and styling -->
+    <Border Background="#1E1E1E" BorderBrush="#0078D7" BorderThickness="2" CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="20" ShadowDepth="0" Opacity="0.8"/>
+        </Border.Effect>
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            
+            <!-- Custom Title Bar -->
+            <Border Grid.Row="0" Background="#0078D7" CornerRadius="8,8,0,0" MouseLeftButtonDown="TitleBar_MouseLeftButtonDown">
+                <Grid>
+                    <!-- Background Image at 40% Opacity -->
+                    <Image Source="pack://application:,,,/Assets/titlebar.png" 
+                           Opacity="0.4" 
+                           Stretch="UniformToFill"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Stretch"/>
+                    
+                    <!-- Title Bar Content -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <!-- Title Text (Left) -->
+                        <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="15,0,0,0">
+                        <TextBlock Text="NotNaraka" 
+                                   FontSize="16" 
+                                   FontWeight="Bold" 
+                                   Foreground="White" 
+                                   VerticalAlignment="Center">
+                            <TextBlock.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="8" ShadowDepth="2" Opacity="0.7"/>
+                            </TextBlock.Effect>
+                        </TextBlock>
+                        <TextBlock Text=" Launcher" 
+                                   FontSize="16" 
+                                   FontWeight="Light" 
+                                   Foreground="#E0E0E0" 
+                                   VerticalAlignment="Center" 
+                                   Margin="0,0,0,0"/>
+                    </StackPanel>
+                    
+                    <!-- Window Controls (Right) -->
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                        <Button x:Name="MinimizeButton" 
+                                Content="─" 
+                                Width="46" 
+                                Height="32"
+                                FontSize="16"
+                                Background="Transparent"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="MinimizeButton_Click"
+                                Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#005A9E"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                        
+                        <Button x:Name="CloseButton" 
+                                Content="✕" 
+                                Width="46" 
+                                Height="32"
+                                FontSize="16"
+                                Background="Transparent"
+                                Foreground="White"
+                                BorderThickness="0"
+                                Click="CloseButton_Click"
+                                Cursor="Hand">
+                            <Button.Style>
+                                <Style TargetType="Button">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Button">
+                                                <Border Background="{TemplateBinding Background}" CornerRadius="0,8,0,0">
+                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#E81123"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                    </Grid>
+                </Grid>
+            </Border>
+            
+            <!-- Main Content Area -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <!-- Left Navigation Panel -->
+                <Border Grid.Column="0" BorderBrush="#3E3E42" BorderThickness="0,0,1,0">
+                    <Border.Background>
+                        <ImageBrush ImageSource="Ratz.png" Opacity="0.15" Stretch="UniformToFill"/>
+                    </Border.Background>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                
+                <!-- Navigation Buttons -->
+                <StackPanel Grid.Row="0" VerticalAlignment="Top">
+                    <Button x:Name="DashboardButton" 
+                            Content="🏠 Dashboard" 
+                            Click="NavigationButton_Click"
+                            Tag="Dashboard"
+                            Style="{StaticResource NavButtonStyle}"
+                            Margin="0,20,0,0"/>
+                    
+                    <Button x:Name="TweaksButton" 
+                            Content="⚙️ Tweaks" 
+                            Click="NavigationButton_Click"
+                            Tag="Tweaks"
+                            Style="{StaticResource NavButtonStyle}"/>
+                    
+                    <Button x:Name="ClientsButton" 
+                            Content="📥 Clients" 
+                            Click="NavigationButton_Click"
+                            Tag="Clients"
+                            Style="{StaticResource NavButtonStyle}"/>
+                    
+                    <Button x:Name="NarakaSettingsButton" 
+                            Content="🎮 Naraka Settings" 
+                            Click="NavigationButton_Click"
+                            Tag="NarakaSettings"
+                            Style="{StaticResource NavButtonStyle}"/>
+                    
+                    <Button x:Name="SettingsButton" 
+                            Content="🔧 Settings" 
+                            Click="NavigationButton_Click"
+                            Tag="Settings"
+                            Style="{StaticResource NavButtonStyle}"/>
+                </StackPanel>
+                
+                <!-- Bottom Section: Launch Game + Social Links -->
+                <StackPanel Grid.Row="1" Margin="10,0,10,10">
+                    <!-- Launch Game Button -->
+                    <Button x:Name="LaunchGameButton"
+                            Content="🎮 Launch Naraka"
+                            Click="LaunchGame_Click"
+                            Background="#10B981"
+                            Foreground="White"
+                            FontSize="14"
+                            FontWeight="Bold"
+                            Padding="12,10"
+                            Margin="0,0,0,10"
+                            Cursor="Hand"
+                            BorderThickness="0">
+                        <Button.Effect>
+                            <DropShadowEffect Color="#10B981" BlurRadius="10" ShadowDepth="0" Opacity="0.5"/>
+                        </Button.Effect>
+                    </Button>
+                    
+                    <!-- Social Media Links -->
+                    <Border Padding="15" Background="#252526">
+                        <StackPanel>
+                            <TextBlock Text="Follow Me" 
+                                       FontSize="12" 
+                                       FontWeight="SemiBold" 
+                                       Foreground="#999999" 
+                                       Margin="0,0,0,10"
+                                       HorizontalAlignment="Center"/>
+                            
+                            <Button Content="💜 Twitch" 
+                                    Click="OpenTwitch_Click"
+                                    Background="#9146FF"
+                                    Foreground="White"
+                                    FontSize="11"
+                                    Padding="8,4"
+                                    Margin="0,2"
+                                    Cursor="Hand"
+                                    BorderThickness="0"/>
+                            
+                            <Button Content="🐙 GitHub" 
+                                    Click="OpenGitHub_Click"
+                                    Background="#333333"
+                                    Foreground="White"
+                                    FontSize="11"
+                                    Padding="8,4"
+                                    Margin="0,2"
+                                    Cursor="Hand"
+                                    BorderThickness="0"/>
+                            
+                            <Button Content="☕ Ko-Fi" 
+                                    Click="OpenKoFi_Click"
+                                    Background="#FF5E5B"
+                                    Foreground="White"
+                                    FontSize="11"
+                                    Padding="8,4"
+                                    Margin="0,2"
+                                    Cursor="Hand"
+                                    BorderThickness="0"/>
+                            
+                            <Button Content="💬 Discord" 
+                                    Click="OpenDiscord_Click"
+                                    Background="#5865F2"
+                                    Foreground="White"
+                                    FontSize="11"
+                                    Padding="8,4"
+                                    Margin="0,2"
+                                    Cursor="Hand"
+                                    BorderThickness="0"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        <!-- Main Content Area -->
+        <Grid Grid.Column="1" x:Name="ContentPanel" Background="#1E1E1E">
+            <!-- Default Welcome Content -->
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="🎮 Welcome to NarakaTweaks Launcher" 
+                           FontSize="32" 
+                           FontWeight="Bold" 
+                           Foreground="White"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,16"/>
+                
+                <TextBlock Text="Select a tab from the left to get started" 
+                           FontSize="16" 
+                           Foreground="#E0E0E0"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,32"/>
+                
+                <Border Background="#2D2D30" 
+                        CornerRadius="8" 
+                        Padding="24" 
+                        BorderBrush="#3E3E42"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="✅ System Optimizations Ready" 
+                                   FontSize="14" 
+                                   Foreground="#E0E0E0" 
+                                   Margin="0,0,0,8"/>
+                        <TextBlock Text="✅ Client Manager Available" 
+                                   FontSize="14" 
+                                   Foreground="#E0E0E0" 
+                                   Margin="0,0,0,8"/>
+                        <TextBlock Text="✅ Background Services Running" 
+                                   FontSize="14" 
+                                   Foreground="#E0E0E0"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

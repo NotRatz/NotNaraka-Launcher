@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "vXft/qcP0BQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Ratz\\Desktop\\NotNaraka Launcher\\Launcher.Shared\\Launcher.Shared.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ratz\\.nuget\\packages\\microsoft.net.illink.tasks\\8.0.20\\microsoft.net.illink.tasks.8.0.20.nupkg.sha512",
+    "C:\\Users\\Ratz\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\8.0.20\\microsoft.netcore.app.runtime.win-x64.8.0.20.nupkg.sha512",
+    "C:\\Users\\Ratz\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\8.0.20\\microsoft.windowsdesktop.app.runtime.win-x64.8.0.20.nupkg.sha512",
+    "C:\\Users\\Ratz\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\8.0.20\\microsoft.aspnetcore.app.runtime.win-x64.8.0.20.nupkg.sha512"
+  ],
+  "logs": []
+}
