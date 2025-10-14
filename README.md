@@ -28,7 +28,7 @@
 ## 🔐 Security & Privacy
 
 ### What We Collect
-✅ Platform info (Steam/Epic/NetEase)  
+✅ Platform info (Steam/XboxGames/Epic/NetEase)  
 
 ### What We DON'T Collect
 ❌ Passwords or tokens  
@@ -66,7 +66,7 @@ Please include:
 
 ## 🔒 Why No Source Code?
 
-**Source code is kept private to keep API keys hidden.**
+**Source code is kept private to keep API keys hidden as is standard practice. If you have questions about the source code please feel free to reach out to me personally.**
 
 Only the installer and documentation are publicly available.
 
@@ -88,9 +88,12 @@ If NotNaraka Launcher helps keep your Naraka performing well, please:
 - 🐛 **Report issues** you encounter
 - 💬 **Share feedback** in Discussions
 - 📢 **Tell friends** about the project
+- ☕ **Buy me a coffee** and support my caffine addiction
 
 ---
 
 **Built with ❤️ for the Naraka Bladepoint community**
 
 *Keep the game fair for everyone!*
+
+*Disclaimer: Though the risk of non-reversable issues is small, I am not personally reponsible for any damages the use of this software and proposed tweaks causes. For any issues, please reach out to me via Discord. The app uses your Steam ID, Epic Games ID, NarakaID, and/or XboxGames ID to link your account and fetch public game data. It stores only what’s needed for that feature, and you can remove it any time in Settings.*
