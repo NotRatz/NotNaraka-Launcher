@@ -14,7 +14,7 @@
 
 **[⬇️ Download Latest Release](https://github.com/NotRatz/NotNaraka-Launcher/releases/latest)**
 
-1. Download NotNaraka-Launcher-Setup-v1.0.0.exe
+1. Download NotNaraka-Launcher-Setup.exe
 2. Run installer as Administrator
 3. Follow setup wizard
 
