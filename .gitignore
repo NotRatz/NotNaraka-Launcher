@@ -29,6 +29,7 @@ obj/
 !WEBHOOK_SETUP.md
 !installer-setup.iss
 !.gitignore
+!carousel.json
 
 # Allow installer output folder and its contents
 !installer-output/
