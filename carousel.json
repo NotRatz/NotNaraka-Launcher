@@ -17,6 +17,32 @@
   ],
   "streams": [
     {
+      "title": "Pure Numzinema - Numza's Phat Wins",
+      "channel": "Numzzza",
+      "url": "https://www.twitch.tv/Numzzza"
+    },
+    {
+      "title": "STR Peyton's Ragefest",
+      "channel": "p3ytonpvp",
+      "url": "https://www.twitch.tv/p3ytonpvp"
+    },
+    {
+      "title": "Sebguy's Casting?!",
+      "channel": "sebguy32",
+      "url": "https://www.twitch.tv/sebguy32"
+    },
+    {
+      "title": "Learn from the best! Hypernova Has Tricks",
+      "channel": "HyperNova",
+      "url": "https://www.twitch.tv/HyperNova"
+    },
+    {
+      "title": "STR Joykill's Controller Madness",
+      "description": "future (controller) jcup player btw",
+      "channel": "joykilltv",
+      "url": "https://www.twitch.tv/joykilltv"
+    },
+    {
       "title": "Cre8ives Casting and watching NA Morus Finals Trios?!",
       "description": "NA MORUS FINALS TRIOS",
       "channel": "Cre8ives",
@@ -29,9 +55,9 @@
       "url": "https://www.twitch.tv/NotRatz"
     },
     {
-      "title": "Learn from the best! Hypernova Has Tricks",
-      "channel": "HyperNova",
-      "url": "https://www.twitch.tv/HyperNova"
+      "title": "NarakaBladepoint Official's Stream",
+      "channel": "NarakaBladepoint",
+      "url": "https://www.twitch.tv/NarakaBladepoint"
     }
   ],
   "news": [
