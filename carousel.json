@@ -17,9 +17,20 @@
   ],
   "streams": [
     {
+      "title": "Ratz Coming Back Stream?!",
+      "description": "Prepare yourself for my comeback!",
+      "channel": "NotRatz",
+      "url": "https://www.twitch.tv/NotRatz"
+    },
+    {
       "title": "Pure Numzinema - Numza's Phat Wins",
       "channel": "Numzzza",
       "url": "https://www.twitch.tv/Numzzza"
+    },
+    {
+      "title": "Milan0tv, Father of Micro teaches the Strats to Succeed",
+      "channel": "milan0tv",
+      "url": "https://www.twitch.tv/milan0tv"
     },
     {
       "title": "STR Peyton's Ragefest",
@@ -52,12 +63,6 @@
       "description": "NA MORUS FINALS TRIOS",
       "channel": "Cre8ives",
       "url": "https://www.twitch.tv/Cre8ives"
-    },
-    {
-      "title": "Ratz Coming Back Stream?!",
-      "description": "Prepare yourself for my comeback!",
-      "channel": "NotRatz",
-      "url": "https://www.twitch.tv/NotRatz"
     },
     {
       "title": "NarakaBladepoint Official's Stream",
