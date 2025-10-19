@@ -3,32 +3,30 @@
     {
       "title": "NARAKA Ultimate Combat Guide 2025",
       "description": "Master advanced techniques, grappling hooks, and weapon combos in this comprehensive guide.",
-      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-      "date": "2024-12-19T15:30:00Z"
+      "url": "https://youtu.be/j5JhZ7xJGkM",
+      "thumbnail": "https://img.youtube.com/vi/j5JhZ7xJGkM/maxresdefault.jpg",
+      "date": "2025-10-13"
     },
     {
-      "title": "Top 10 NARAKA Characters Ranked",
-      "description": "Which heroes dominate the current meta? Find out in our comprehensive tier list analysis.",
-      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      "thumbnail": "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
-      "date": "2024-12-18T12:00:00Z"
+      "title": "STR.Peyton 1st Day Highlights",
+      "description": "See our highlighted Strive content creator of the month Peyton's newest video!",
+      "url": "https://youtu.be/4jIIPr9g3ws?si=TdjOyUZx9e5O2T2k",
+      "thumbnail": "https://img.youtube.com/vi/4jIIPr9g3ws/maxresdefault.jpg",
+      "date": "2025-10-16"
     }
   ],
   "streams": [
     {
-      "title": "🔴 LIVE: NARAKA Championship Finals",
-      "description": "Watch the best players compete for the ultimate prize in real-time!",
-      "channel": "narakabladepoint",
-      "url": "https://www.twitch.tv/narakabladepoint",
-      "isLive": true
+      "title": "NA MORUS CUP FINALS",
+      "description": "Watch the best players (and Fuyumi / Immortal)compete for the ultimate prize in real-time!",
+      "channel": "servairyo",
+      "url": "https://www.twitch.tv/servairyo"
     },
     {
-      "title": "Pro Player Training Session",
-      "description": "Learn from the pros as they practice advanced techniques and strategies.",
-      "channel": "pronaraka",
-      "url": "https://www.twitch.tv/pronaraka",
-      "isLive": false
+      "title": "Ratz Coming Back Stream?!",
+      "description": "Prepare yourself for my comeback!",
+      "channel": "NotRatz",
+      "url": "https://www.twitch.tv/NotRatz"
     }
   ],
   "news": [
@@ -36,27 +34,15 @@
       "title": "NotNaraka Launcher v1.0.8.3 Released",
       "description": "Enhanced carousel system, improved UI theming, and better news integration. Get the latest version now!",
       "url": "https://github.com/NotRatz/NotNaraka-Launcher/releases/latest",
-      "date": "2024-12-19T10:30:00Z"
+      "date": "2025-10-18"
     },
     {
-      "title": "NARAKA Season 13: New Hero Revealed",
+      "title": "NARAKA: BLADEPOINT Update - October 10th, 2025",
       "description": "Discover the newest addition to the NARAKA roster with unique abilities and weapon mastery.",
-      "url": "https://www.narakathegame.com/news/season-13",
-      "date": "2024-12-17T08:00:00Z"
-    },
-    {
-      "title": "Balance Update: Weapon Adjustments",
-      "description": "Major weapon balance changes affect the meta. See what's been buffed and nerfed this patch.",
-      "url": "https://www.narakathegame.com/news/balance-update",
-      "date": "2024-12-15T16:45:00Z"
-    },
-    {
-      "title": "Winter Event: Exclusive Cosmetics",
-      "description": "Limited-time winter event brings exclusive skins, emotes, and seasonal game modes.",
-      "url": "https://www.narakathegame.com/events/winter-2024",
-      "date": "2024-12-14T09:15:00Z"
+      "url": "https://www.narakathegame.com/news/update/20250922/33459_1260476.html",
+      "date": "2025-10-10"
     }
   ],
-  "lastUpdated": "2024-12-19T15:30:00Z",
-  "version": "1.1"
+  "lastUpdated": "2025-10-18",
+  "version": "1.2"
 }
