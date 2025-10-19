@@ -16,7 +16,7 @@
     }
   ],
   "streams": [
-     {
+    {
       "title": "Cre8ives Casting and watching NA Morus Finals Trios?!",
       "description": "NA MORUS FINALS TRIOS",
       "channel": "NotRatz",
@@ -27,6 +27,11 @@
       "description": "Prepare yourself for my comeback!",
       "channel": "NotRatz",
       "url": "https://www.twitch.tv/NotRatz"
+    },
+    {
+      "title": "Learn from the best! Hypernova Has Tricks",
+      "channel": "Hypernova",
+      "url": "https://www.twitch.tv/Hypernova"
     }
   ],
   "news": [
