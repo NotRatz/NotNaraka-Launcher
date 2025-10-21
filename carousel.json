@@ -65,6 +65,12 @@
       "url": "https://www.twitch.tv/c7sper"
     },
     {
+      "title": "Making full use of jiggle physics, gooning to Lannie",
+      "description": "No-Mic Low-Mental Medium-FPS High-Ping Full-Kebab",
+      "channel": "snakeyy13",
+      "url": "https://www.twitch.tv/snakeyy13"
+    },
+    {
       "title": "NarakaBladepoint Official's Stream",
       "description": "Official NARAKA content and updates!",
       "channel": "NarakaBladepoint",
@@ -92,6 +98,13 @@
     },
   ],
   "images": [
+    {
+      "title": "Do you want to be featured?!",
+      "description": "Click the Image Below!",
+      "imageUrl": "https://i.imgur.com/vh8x2Bc.png",
+      "url": "https://discordapp.com/users/313455919042396160"
+      "date": "2025-10-21",
+    }
   ],
   "lastUpdated": "2025-10-21",
   "version": "1.3"
