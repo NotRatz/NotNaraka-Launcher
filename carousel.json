@@ -24,52 +24,59 @@
     },
     {
       "title": "Pure Numzinema - Numza's Phat Wins",
+      "description": "Watch Numza dominate with epic gameplay!",
       "channel": "Numzzza",
       "url": "https://www.twitch.tv/Numzzza"
     },
     {
       "title": "Milan0tv, Father of Micro teaches the Strats to Succeed",
+      "description": "Learn winning strategies from the master!",
       "channel": "milan0tv",
       "url": "https://www.twitch.tv/milan0tv"
     },
     {
       "title": "STR Peyton's Ragefest",
+      "description": "High-energy competitive gameplay!",
       "channel": "p3ytonpvp",
       "url": "https://www.twitch.tv/p3ytonpvp"
     },
     {
       "title": "Sebguy's Casting?!",
+      "description": "Pro commentary and tournament coverage!",
       "channel": "sebguy32",
       "url": "https://www.twitch.tv/sebguy32"
     },
     {
       "title": "Learn from the best! Hypernova Has Tricks",
+      "description": "Master advanced techniques and combos!",
       "channel": "HyperNova",
       "url": "https://www.twitch.tv/HyperNova"
     },
     {
       "title": "STR Joykill's Controller Madness",
-      "description": "future (controller) jcup player btw",
+      "description": "Future (controller) jcup player btw",
       "channel": "joykilltv",
       "url": "https://www.twitch.tv/joykilltv"
     },
     {
       "title": "C7SPER Terrorizing NA's Finest",
+      "description": "Top tier competitive gameplay!",
       "channel": "c7sper",
       "url": "https://www.twitch.tv/c7sper"
     },
     {
       "title": "NarakaBladepoint Official's Stream",
+      "description": "Official NARAKA content and updates!",
       "channel": "NarakaBladepoint",
       "url": "https://www.twitch.tv/NarakaBladepoint"
     }
   ],
   "news": [
     {
-      "title": "NotNaraka Launcher v1.0.9 Released",
-      "description": "Enhanced carousel system, improved UI theming, and better news integration. Get the latest version now!",
+      "title": "NotNaraka Launcher v1.0.11.6 Released",
+      "description": "New carousel image support! Display fan art, announcements, and screenshots directly in the launcher.",
       "url": "https://github.com/NotRatz/NotNaraka-Launcher/releases/latest",
-      "date": "2025-10-18"
+      "date": "2025-10-21"
     },
     {
       "title": "NARAKA: BLADEPOINT Update - October 10th, 2025",
@@ -93,6 +100,6 @@
       "pinned": true
     }
   ],
-  "lastUpdated": "2025-10-18",
-  "version": "1.2"
+  "lastUpdated": "2025-10-21",
+  "version": "1.3"
 }
