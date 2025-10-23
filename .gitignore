@@ -40,3 +40,5 @@ installer-output/NotNaraka-Launcher-Setup-v1.0.5.1-Standalone.exe
 installer-output/NotNaraka-Launcher-Portable-v1.0.6.zip
 installer-output/NotNaraka-Launcher-Setup-v1.0.4.1.exe
 installer-output/NotNaraka-Launcher-Setup-v1.0.6.exe
+installer-output/OLD/NotNaraka-Launcher-Minimal.iss
+.gitignore

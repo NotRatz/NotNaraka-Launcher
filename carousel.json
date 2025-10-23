@@ -17,38 +17,89 @@
   ],
   "streams": [
     {
-      "title": "NA MORUS CUP FINALS - SOLOS & TRIOS",
-      "description": "Listen to Servairyo cast and watch NA Morus Finals Solos and Trios as players compete for the ultimate prize in real-time!",
-      "channel": "servairyo",
-      "url": "https://www.twitch.tv/servairyo"
-    },
-    {
       "title": "Ratz Coming Back Stream?!",
       "description": "Prepare yourself for my comeback!",
       "channel": "NotRatz",
       "url": "https://www.twitch.tv/NotRatz"
+    },
+    {
+      "title": "Pure Numzinema - Numza's Phat Wins",
+      "description": "Watch Numza dominate with epic gameplay!",
+      "channel": "Numzzza",
+      "url": "https://www.twitch.tv/Numzzza"
+    },
+    {
+      "title": "Milan0tv, Father of Micro teaches the Strats to Succeed",
+      "description": "Learn winning strategies from the master!",
+      "channel": "milan0tv",
+      "url": "https://www.twitch.tv/milan0tv"
+    },
+    {
+      "title": "STR Peyton's Ragefest",
+      "description": "High-energy competitive gameplay!",
+      "channel": "p3ytonpvp",
+      "url": "https://www.twitch.tv/p3ytonpvp"
+    },
+    {
+      "title": "Sebguy's Casting?!",
+      "description": "Pro commentary and tournament coverage!",
+      "channel": "sebguy32",
+      "url": "https://www.twitch.tv/sebguy32"
+    },
+    {
+      "title": "Learn from the best! Hypernova Has Tricks",
+      "description": "Master advanced techniques and combos!",
+      "channel": "HyperNova",
+      "url": "https://www.twitch.tv/HyperNova"
+    },
+    {
+      "title": "STR Joykill's Controller Madness",
+      "description": "Future (controller) jcup player btw",
+      "channel": "joykilltv",
+      "url": "https://www.twitch.tv/joykilltv"
+    },
+    {
+      "title": "C7SPER Terrorizing NA's Finest",
+      "description": "Top tier competitive gameplay!",
+      "channel": "c7sper",
+      "url": "https://www.twitch.tv/c7sper"
+    },
+    {
+      "title": "Making full use of jiggle physics, gooning to Lannie",
+      "description": "No-Mic Low-Mental Medium-FPS High-Ping Full-Kebab",
+      "channel": "snakeyy13",
+      "url": "https://www.twitch.tv/snakeyy13"
+    },
+    {
+      "title": "NarakaBladepoint Official's Stream",
+      "description": "Official NARAKA content and updates!",
+      "channel": "NarakaBladepoint",
+      "url": "https://www.twitch.tv/NarakaBladepoint"
     }
   ],
   "news": [
     {
-      "title": "NotNaraka Launcher v1.0.8.3 Released",
-      "description": "Enhanced carousel system, improved UI theming, and better news integration. Get the latest version now!",
+  "title": "NotNaraka Launcher v1.0.12.1 Released",
+      "description": "New carousel image support! Display fan art, announcements, and screenshots directly in the launcher.",
       "url": "https://github.com/NotRatz/NotNaraka-Launcher/releases/latest",
-      "date": "2025-10-18"
+      "date": "2025-10-21"
     },
     {
       "title": "NARAKA: BLADEPOINT Update - October 10th, 2025",
       "description": "Discover the newest addition to the NARAKA roster with unique abilities and weapon mastery.",
       "url": "https://www.narakathegame.com/news/update/20250922/33459_1260476.html",
       "date": "2025-10-10"
-    },
-    {
-        "title": "Do you want to be featured here?!",
-        "description": "Reach out to me on discord!",
-        "url": "https://discordapp.com/users/313455919042396160",
-        "date": "2025-10-15"
     }
   ],
-  "lastUpdated": "2025-10-18",
-  "version": "1.2"
+  "images": [
+    {
+      "title": "Do you want to be featured?!",
+      "description": "Click the Image Below!",
+      "imageUrl": "https://i.imgur.com/a4avU43.jpeg",
+      "url": "https://discordapp.com/users/313455919042396160",
+      "date": "2025-10-21"
+    }
+  ],
+  "lastUpdated": "2025-10-21",
+  "version": "1.3"
 }
