@@ -8,13 +8,26 @@ using NotNarakaLauncher.App.Interfaces;
 public class HolidayTheme : IThemeEffect
 {
     private Canvas _canvas;
-    private List<(FrameworkElement flake, double speed, double drift)> _particles = new();
     private Random _rnd = new();
-    private RadialGradientBrush _goldBrush;
-    private RadialGradientBrush _redBrush;
-    private DateTime _lastUpdate = DateTime.Now;
     private bool _isRunning = false;
     private EventHandler _renderHandler;
+    
+    // Fireworks
+    private List<FireworkParticle> _particles = new();
+    private double _timeSinceLastLaunch = 0;
+    
+    // 2026 Glimmer
+    private List<Rectangle> _textPixels = new();
+    private double _glimmerPhase = 0;
+    private class FireworkParticle
+    {
+        public Ellipse Element;
+        public double X, Y;
+        public double VX, VY;
+        public double Alpha;
+        public bool IsRocket; // true = shooting up, false = exploded spark
+        public Color Color;
+    }
     public HolidayTheme()
     {
         _renderHandler = OnRendering;
@@ -24,18 +37,11 @@ public class HolidayTheme : IThemeEffect
         _canvas = canvas;
         _isRunning = true;
         _particles.Clear();
-        // Safe Brush Creation
-        Color gold = Colors.Gold;
-        Color red = Colors.Red;
-        if (resources.Contains("HolidayGold")) gold = (Color)resources["HolidayGold"];
-        if (resources.Contains("HolidayRed")) red = (Color)resources["HolidayRed"];
-        _goldBrush = CreateFrozenBrush(gold);
-        _redBrush = CreateFrozenBrush(red);
-        CompositionTarget.Rendering -= _renderHandler; // Safety
+        _textPixels.Clear();
+        CompositionTarget.Rendering -= _renderHandler;
         CompositionTarget.Rendering += _renderHandler;
-        // Initial Pop
-        for (int i = 0; i < 60; i++) 
-            SpawnParticle(randomY: true);
+        // Draw the static "2026" text immediately (if valid) or defer
+        if (_canvas.ActualWidth > 0) DrawYear2026();
     }
     public void Stop()
     {
@@ -48,77 +54,233 @@ public class HolidayTheme : IThemeEffect
             _canvas = null;
         }
         _particles.Clear();
-    }
-    private RadialGradientBrush CreateFrozenBrush(Color c)
-    {
-        var b = new RadialGradientBrush();
-        b.GradientStops.Add(new GradientStop(c, 0.0));
-        b.GradientStops.Add(new GradientStop(Color.FromArgb(0, c.R, c.G, c.B), 1.0));
-        b.Freeze();
-        return b;
+        _textPixels.Clear();
     }
     private void OnRendering(object sender, EventArgs e)
     {
         if (!_isRunning || _canvas == null) return;
-        var now = DateTime.Now;
-        if ((now - _lastUpdate).TotalMilliseconds < 16) return;
-        _lastUpdate = now;
-        UpdateParticles();
-    }
-    private void SpawnParticle(bool randomY = false)
-    {
-        if (_canvas == null) return;
-        double size = _rnd.NextDouble() * 4.0 + 2.0; 
-        var brush = _rnd.NextDouble() > 0.6 ? _goldBrush : _redBrush;
-        var flake = new Ellipse
+        // Ensure text is drawn if it wasn't valid at Start
+        if (_textPixels.Count == 0 && _canvas.ActualWidth > 0)
         {
-            Width = size,
-            Height = size,
-            Opacity = _rnd.NextDouble() * 0.6 + 0.4,
-            Fill = brush,
-            IsHitTestVisible = false
-        };
-        double w = _canvas.ActualWidth > 0 ? _canvas.ActualWidth : 1200;
-        double h = _canvas.ActualHeight > 0 ? _canvas.ActualHeight : 800;
-        double x = _rnd.NextDouble() * w;
-        double y = randomY ? _rnd.NextDouble() * h : -10;
-        
-        double speed = _rnd.NextDouble() * 1.5 + 0.5; 
-        double drift = (_rnd.NextDouble() - 0.5) * 0.8;
-        
-        Canvas.SetLeft(flake, x);
-        Canvas.SetTop(flake, y);
-        _canvas.Children.Add(flake);
-        _particles.Add((flake, speed, drift));
+             DrawYear2026();
+        }
+        // 1. Update Fireworks
+        UpdateFireworks();
+        // 2. Glimmer the "2026" Text
+        UpdateTextGlimmer();
     }
-    private void UpdateParticles()
+    // --- Fireworks Logic ---
+    private void UpdateFireworks()
     {
-        if (_canvas == null) return;
-        double maxY = _canvas.ActualHeight > 10 ? _canvas.ActualHeight + 20 : 820;
-        double maxX = _canvas.ActualWidth > 10 ? _canvas.ActualWidth : 1200;
+        // Probability to launch (approx every 0.8s at 60fps)
+        _timeSinceLastLaunch += 1.0;
+        if (_timeSinceLastLaunch > 45 && _rnd.NextDouble() < 0.1) 
+        {
+            LaunchRocket();
+            _timeSinceLastLaunch = 0;
+        }
+        double width = _canvas.ActualWidth;
+        double height = _canvas.ActualHeight;
         for (int i = _particles.Count - 1; i >= 0; i--)
         {
-            var (flake, speed, drift) = _particles[i];
-            double y = Canvas.GetTop(flake) + speed;
-            double x = Canvas.GetLeft(flake) + drift;
+            var p = _particles[i];
             
-            if (y > maxY || x < -10 || x > maxX + 10)
+            // Physics
+            p.X += p.VX;
+            p.Y += p.VY;
+            if (p.IsRocket)
             {
-                // Reset
-                Canvas.SetTop(flake, -10);
-                Canvas.SetLeft(flake, _rnd.NextDouble() * maxX);
+                // Rocket Logic: Move up, slow down
+                p.VY += 0.05; // Gravity drag
+                
+                // Explode at peak or random height
+                if (p.VY >= -0.5 || p.Y < height * 0.2) 
+                {
+                    Explode(p);
+                    RemoveParticle(i);
+                    continue;
+                }
             }
             else
             {
-                Canvas.SetTop(flake, y);
-                Canvas.SetLeft(flake, x);
+                // Spark Logic: Fall, fade
+                p.VY += 0.1; // Gravity
+                p.Alpha -= 0.015; // Fade out
+                p.Element.Opacity = p.Alpha;
+                // Remove if invisible or out of bounds
+                if (p.Alpha <= 0 || p.Y > height) 
+                {
+                    RemoveParticle(i);
+                    continue;
+                }
+            }
+            // Render
+            Canvas.SetLeft(p.Element, p.X);
+            Canvas.SetTop(p.Element, p.Y);
+        }
+    }
+    private void LaunchRocket()
+    {
+        double startX = _rnd.NextDouble() * _canvas.ActualWidth * 0.8 + (_canvas.ActualWidth * 0.1);
+        double startY = _canvas.ActualHeight + 10;
+        
+        var color = GetRandomColor();
+        
+        var particle = new FireworkParticle
+        {
+            X = startX,
+            Y = startY,
+            VX = (_rnd.NextDouble() - 0.5) * 1.0, // Slight drift
+            VY = -(_rnd.NextDouble() * 5.0 + 8.0), // Fast launch speed
+            IsRocket = true,
+            Color = color,
+            Alpha = 1.0,
+            Element = CreateEllipse(4, color)
+        };
+        
+        _particles.Add(particle);
+        _canvas.Children.Add(particle.Element);
+    }
+    private void Explode(FireworkParticle rocket)
+    {
+        // Spawn 30-50 sparks
+        int count = _rnd.Next(30, 50);
+        for (int i = 0; i < count; i++)
+        {
+            double angle = _rnd.NextDouble() * Math.PI * 2;
+            double speed = _rnd.NextDouble() * 3.0 + 1.0;
+            
+            var spark = new FireworkParticle
+            {
+                X = rocket.X,
+                Y = rocket.Y,
+                VX = Math.Cos(angle) * speed,
+                VY = Math.Sin(angle) * speed,
+                IsRocket = false,
+                Color = rocket.Color,
+                Alpha = 1.0,
+                Element = CreateEllipse(2, rocket.Color)
+            };
+            
+            _particles.Add(spark);
+            _canvas.Children.Add(spark.Element);
+        }
+    }
+    private void RemoveParticle(int index)
+    {
+        if (index < 0 || index >= _particles.Count) return;
+        _canvas.Children.Remove(_particles[index].Element);
+        _particles.RemoveAt(index);
+    }
+    private Ellipse CreateEllipse(double size, Color color)
+    {
+        var e = new Ellipse
+        {
+            Width = size,
+            Height = size,
+            Fill = new SolidColorBrush(color),
+            IsHitTestVisible = false
+        };
+        // Freeze brush for performance? 
+        if (e.Fill.CanFreeze) e.Fill.Freeze();
+        return e;
+    }
+    private Color GetRandomColor()
+    {
+        // Vibrant 8-bit style colors
+        var colors = new[] 
+        {
+            Colors.Cyan, Colors.Magenta, Colors.Yellow, Colors.Lime, 
+            Color.FromRgb(255, 100, 100) // Hot Pink/Red
+        };
+        return colors[_rnd.Next(colors.Length)];
+    }
+    // --- 8-Bit Text Logic ---
+    private void DrawYear2026()
+    {
+        // 5x3 Grid Masks
+        // 1=Pixel, 0=Empty
+        string[] digit2 = 
+        {
+            "111",
+            "001",
+            "111",
+            "100",
+            "111"
+        };
+        string[] digit0 = 
+        {
+            "111",
+            "101",
+            "101",
+            "101",
+            "111"
+        };
+        string[] digit6 = 
+        {
+            "111",
+            "100",
+            "111",
+            "101",
+            "111"
+        };
+        // Layout
+        double pixelSize = 6;
+        double spacing = 2; // Gap between pixels
+        double digitGap = 15; // Gap between digits
+        
+        // Center approximate position
+        double startX = (_canvas.ActualWidth / 2) - ((4 * 3 * pixelSize) + (3 * digitGap));
+        if (startX < 50) startX = 50; 
+        double startY = 100; // Near top
+        DrawDigit(digit2, startX, startY, pixelSize, spacing);
+        startX += (3 * pixelSize) + spacing + digitGap;
+        
+        DrawDigit(digit0, startX, startY, pixelSize, spacing);
+        startX += (3 * pixelSize) + spacing + digitGap;
+        
+        DrawDigit(digit2, startX, startY, pixelSize, spacing);
+        startX += (3 * pixelSize) + spacing + digitGap;
+        
+        DrawDigit(digit6, startX, startY, pixelSize, spacing);
+    }
+    private void DrawDigit(string[] mask, double x, double y, double size, double spacing)
+    {
+        for (int r = 0; r < mask.Length; r++)
+        {
+            for (int c = 0; c < mask[r].Length; c++)
+            {
+                if (mask[r][c] == '1')
+                {
+                    var rect = new Rectangle
+                    {
+                        Width = size,
+                        Height = size,
+                        Fill = Brushes.Gold,
+                        Opacity = 0.3, // Base opacity (faint background)
+                        IsHitTestVisible = false
+                    };
+                    Canvas.SetLeft(rect, x + c * (size + spacing));
+                    Canvas.SetTop(rect, y + r * (size + spacing));
+                    _canvas.Children.Add(rect); // Add to back? ZIndex? 
+                    // To ensure it's behind fireworks, we might want to AddAt(0) or handle ZIndeces. 
+                    // For now, adding generally works.
+                    _textPixels.Add(rect);
+                }
             }
         }
+    }
+    private void UpdateTextGlimmer()
+    {
+        // Sine wave opacity 0.3 to 0.8
+        _glimmerPhase += 0.05;
+        double opacity = 0.55 + 0.25 * Math.Sin(_glimmerPhase);
         
-        // Refill logic
-        if (_particles.Count < 60 && _rnd.Next(10) == 0)
+        foreach (var rect in _textPixels)
         {
-            SpawnParticle();
+            // Add slight randomness per pixel for "glimmer"
+            double noise = (_rnd.NextDouble() - 0.5) * 0.1;
+            rect.Opacity = Math.Clamp(opacity + noise, 0.2, 1.0);
         }
     }
 }
