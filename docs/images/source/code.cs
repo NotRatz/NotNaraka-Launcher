@@ -199,48 +199,33 @@ public class HolidayTheme : IThemeEffect
     private void DrawYear2026()
     {
         // 5x3 Grid Masks
-        // 1=Pixel, 0=Empty
-        string[] digit2 = 
-        {
-            "111",
-            "001",
-            "111",
-            "100",
-            "111"
-        };
-        string[] digit0 = 
-        {
-            "111",
-            "101",
-            "101",
-            "101",
-            "111"
-        };
-        string[] digit6 = 
-        {
-            "111",
-            "100",
-            "111",
-            "101",
-            "111"
-        };
-        // Layout
-        double pixelSize = 6;
-        double spacing = 2; // Gap between pixels
-        double digitGap = 15; // Gap between digits
+        string[] digit2 = { "111", "001", "111", "100", "111" };
+        string[] digit0 = { "111", "101", "101", "101", "111" };
+        string[] digit6 = { "111", "100", "111", "101", "111" };
+        double screenWidth = _canvas.ActualWidth;
+        double screenHeight = _canvas.ActualHeight;
+        // Scaling Factor based on screen size
+        bool isSplash = screenWidth < 1000;
         
-        // Center approximate position
-        double startX = (_canvas.ActualWidth / 2) - ((4 * 3 * pixelSize) + (3 * digitGap));
-        if (startX < 50) startX = 50; 
-        double startY = 100; // Near top
+        double pixelSize = isSplash ? 5 : 10; // Larger for Main Window
+        double spacing = isSplash ? 2 : 4;
+        double digitGap = isSplash ? 10 : 20;
+        // Calculate Total Width used by "2026"
+        // 4 Digits * 3 columns * pixelSize
+        // 4 Digits * 2 gaps * spacing inside digit
+        // 3 Gaps between digits
+        double singleDigitWidth = (3 * pixelSize) + (2 * spacing);
+        double totalWidth = (4 * singleDigitWidth) + (3 * digitGap);
+        double startX = (screenWidth - totalWidth) / 2;
+        double startY = isSplash ? 120 : (screenHeight * 0.2); // Position relative to top
         DrawDigit(digit2, startX, startY, pixelSize, spacing);
-        startX += (3 * pixelSize) + spacing + digitGap;
+        startX += singleDigitWidth + digitGap;
         
         DrawDigit(digit0, startX, startY, pixelSize, spacing);
-        startX += (3 * pixelSize) + spacing + digitGap;
+        startX += singleDigitWidth + digitGap;
         
         DrawDigit(digit2, startX, startY, pixelSize, spacing);
-        startX += (3 * pixelSize) + spacing + digitGap;
+        startX += singleDigitWidth + digitGap;
         
         DrawDigit(digit6, startX, startY, pixelSize, spacing);
     }
