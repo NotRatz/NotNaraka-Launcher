@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using NotNarakaLauncher.App.Interfaces;
+
 public class HolidayTheme : IThemeEffect
 {
     private Canvas _canvas;
@@ -19,6 +20,7 @@ public class HolidayTheme : IThemeEffect
     // 2026 Glimmer
     private List<Rectangle> _textPixels = new();
     private double _glimmerPhase = 0;
+
     private class FireworkParticle
     {
         public Ellipse Element;
@@ -28,21 +30,26 @@ public class HolidayTheme : IThemeEffect
         public bool IsRocket; // true = shooting up, false = exploded spark
         public Color Color;
     }
+
     public HolidayTheme()
     {
         _renderHandler = OnRendering;
     }
+
     public void Start(Canvas canvas, ResourceDictionary resources)
     {
         _canvas = canvas;
         _isRunning = true;
         _particles.Clear();
         _textPixels.Clear();
+
         CompositionTarget.Rendering -= _renderHandler;
         CompositionTarget.Rendering += _renderHandler;
+
         // Draw the static "2026" text immediately (if valid) or defer
         if (_canvas.ActualWidth > 0) DrawYear2026();
     }
+
     public void Stop()
     {
         _isRunning = false;
@@ -56,20 +63,26 @@ public class HolidayTheme : IThemeEffect
         _particles.Clear();
         _textPixels.Clear();
     }
+
     private void OnRendering(object sender, EventArgs e)
     {
         if (!_isRunning || _canvas == null) return;
+
         // Ensure text is drawn if it wasn't valid at Start
         if (_textPixels.Count == 0 && _canvas.ActualWidth > 0)
         {
              DrawYear2026();
         }
+
         // 1. Update Fireworks
         UpdateFireworks();
+
         // 2. Glimmer the "2026" Text
         UpdateTextGlimmer();
     }
+
     // --- Fireworks Logic ---
+
     private void UpdateFireworks()
     {
         // Probability to launch (approx every 0.8s at 60fps)
@@ -79,8 +92,10 @@ public class HolidayTheme : IThemeEffect
             LaunchRocket();
             _timeSinceLastLaunch = 0;
         }
+
         double width = _canvas.ActualWidth;
         double height = _canvas.ActualHeight;
+
         for (int i = _particles.Count - 1; i >= 0; i--)
         {
             var p = _particles[i];
@@ -88,6 +103,7 @@ public class HolidayTheme : IThemeEffect
             // Physics
             p.X += p.VX;
             p.Y += p.VY;
+
             if (p.IsRocket)
             {
                 // Rocket Logic: Move up, slow down
@@ -107,6 +123,7 @@ public class HolidayTheme : IThemeEffect
                 p.VY += 0.1; // Gravity
                 p.Alpha -= 0.015; // Fade out
                 p.Element.Opacity = p.Alpha;
+
                 // Remove if invisible or out of bounds
                 if (p.Alpha <= 0 || p.Y > height) 
                 {
@@ -114,11 +131,13 @@ public class HolidayTheme : IThemeEffect
                     continue;
                 }
             }
+
             // Render
             Canvas.SetLeft(p.Element, p.X);
             Canvas.SetTop(p.Element, p.Y);
         }
     }
+
     private void LaunchRocket()
     {
         double startX = _rnd.NextDouble() * _canvas.ActualWidth * 0.8 + (_canvas.ActualWidth * 0.1);
@@ -141,6 +160,7 @@ public class HolidayTheme : IThemeEffect
         _particles.Add(particle);
         _canvas.Children.Add(particle.Element);
     }
+
     private void Explode(FireworkParticle rocket)
     {
         // Spawn 30-50 sparks
@@ -166,12 +186,14 @@ public class HolidayTheme : IThemeEffect
             _canvas.Children.Add(spark.Element);
         }
     }
+
     private void RemoveParticle(int index)
     {
         if (index < 0 || index >= _particles.Count) return;
         _canvas.Children.Remove(_particles[index].Element);
         _particles.RemoveAt(index);
     }
+
     private Ellipse CreateEllipse(double size, Color color)
     {
         var e = new Ellipse
@@ -185,6 +207,7 @@ public class HolidayTheme : IThemeEffect
         if (e.Fill.CanFreeze) e.Fill.Freeze();
         return e;
     }
+
     private Color GetRandomColor()
     {
         // Vibrant 8-bit style colors
@@ -195,29 +218,36 @@ public class HolidayTheme : IThemeEffect
         };
         return colors[_rnd.Next(colors.Length)];
     }
+
     // --- 8-Bit Text Logic ---
+
     private void DrawYear2026()
     {
         // 5x3 Grid Masks
         string[] digit2 = { "111", "001", "111", "100", "111" };
         string[] digit0 = { "111", "101", "101", "101", "111" };
         string[] digit6 = { "111", "100", "111", "101", "111" };
+
         double screenWidth = _canvas.ActualWidth;
         double screenHeight = _canvas.ActualHeight;
+
         // Scaling Factor based on screen size
         bool isSplash = screenWidth < 1000;
         
         double pixelSize = isSplash ? 5 : 10; // Larger for Main Window
         double spacing = isSplash ? 2 : 4;
         double digitGap = isSplash ? 10 : 20;
+
         // Calculate Total Width used by "2026"
         // 4 Digits * 3 columns * pixelSize
         // 4 Digits * 2 gaps * spacing inside digit
         // 3 Gaps between digits
         double singleDigitWidth = (3 * pixelSize) + (2 * spacing);
         double totalWidth = (4 * singleDigitWidth) + (3 * digitGap);
+
         double startX = (screenWidth - totalWidth) / 2;
         double startY = isSplash ? 120 : (screenHeight * 0.2); // Position relative to top
+
         DrawDigit(digit2, startX, startY, pixelSize, spacing);
         startX += singleDigitWidth + digitGap;
         
@@ -229,6 +259,7 @@ public class HolidayTheme : IThemeEffect
         
         DrawDigit(digit6, startX, startY, pixelSize, spacing);
     }
+
     private void DrawDigit(string[] mask, double x, double y, double size, double spacing)
     {
         for (int r = 0; r < mask.Length; r++)
@@ -255,6 +286,7 @@ public class HolidayTheme : IThemeEffect
             }
         }
     }
+
     private void UpdateTextGlimmer()
     {
         // Sine wave opacity 0.3 to 0.8
@@ -269,4 +301,5 @@ public class HolidayTheme : IThemeEffect
         }
     }
 }
+
 return new HolidayTheme();
