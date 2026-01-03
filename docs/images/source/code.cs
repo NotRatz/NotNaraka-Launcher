@@ -174,8 +174,9 @@ namespace NotNarakaLauncher.App
                     case ParticleMode.Hold:
                         p.HoldTime -= 1.0 / FPS;
                         if (p.HoldTime <= 0) p.Mode = ParticleMode.Fade;
-                        // Glimmer
-                        if (_rnd.NextDouble() < 0.1) p.Element.Opacity = 0.5 + _rnd.NextDouble() * 0.5;
+                        // Glimmer High Opacity for Readability
+                        if (_rnd.NextDouble() < 0.2) p.Element.Opacity = 0.8 + _rnd.NextDouble() * 0.2;
+                        else p.Element.Opacity = 1.0;
                         break;
 
                     case ParticleMode.Fade:
@@ -262,7 +263,7 @@ namespace NotNarakaLauncher.App
                 Target = target,
                 Color = parent.Color,
                 Alpha = 1.0,
-                Element = CreateEllipse(isSeeking ? 3 : 2, parent.Color)
+                Element = CreateEllipse(isSeeking ? 4 : 2, parent.Color)
             };
             _particles.Add(p);
             _canvas.Children.Add(p.Element);
@@ -314,7 +315,7 @@ namespace NotNarakaLauncher.App
             double totalWidth = (4 * singleDigitWidth) + (3 * digitGap);
 
             double startX = (screenWidth - totalWidth) / 2;
-            double startY = isSplash ? 160 : (screenHeight * 0.2); 
+            double startY = isSplash ? 160 : 60; // Move higher on Main to avoid blocking WebPlayer 
 
             AddDigitTargets(digit2, startX, startY, pixelSize, spacing);
             startX += singleDigitWidth + digitGap;
