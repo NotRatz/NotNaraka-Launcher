@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,6 +15,8 @@ namespace NotNarakaLauncher.App
         private Random _rnd = new();
         private bool _isRunning = false;
         private EventHandler _renderHandler;
+        private Stopwatch _stopwatch = new();
+        private double _lastTime = 0;
         
         // Particles
         private List<FireworkParticle> _particles = new();
@@ -23,7 +26,11 @@ namespace NotNarakaLauncher.App
         private List<Point> _textTargets = new();
         private double _specialTimer = 0;
         private double _nextSpecialInterval = 15; // Seconds
-        private const double FPS = 60.0;
+        
+        // Configuration
+        private const double TargetFps = 60.0;
+        private const double BaseGravity = 0.05;
+        private const double SpeedScale = 0.7; // Global slow-down factor (0.7 = 70% speed)
         
         private class FireworkParticle
         {
@@ -60,7 +67,10 @@ namespace NotNarakaLauncher.App
             _particles.Clear();
             _textTargets.Clear();
             _specialTimer = 0;
-            _nextSpecialInterval = _rnd.Next(15, 120);
+            _nextSpecialInterval = _rnd.Next(15, 30); // More frequent for testing, or user pref
+            
+            _stopwatch.Restart();
+            _lastTime = _stopwatch.Elapsed.TotalSeconds;
 
             CompositionTarget.Rendering -= _renderHandler;
             CompositionTarget.Rendering += _renderHandler;
@@ -73,6 +83,7 @@ namespace NotNarakaLauncher.App
         {
             _isRunning = false;
             CompositionTarget.Rendering -= _renderHandler;
+            _stopwatch.Stop();
             
             if (_canvas != null)
             {
@@ -86,33 +97,52 @@ namespace NotNarakaLauncher.App
         {
             if (!_isRunning || _canvas == null) return;
             
-            // Pause logic
-            var win = Window.GetWindow(_canvas);
-            if (win != null && (win.WindowState == WindowState.Minimized || !win.IsVisible)) return;
+            try
+            {
+                // Pause logic (basic visibility check)
+                if (_canvas.PresentationSource == null) return;
 
-            // Recalculate targets if size changed (dramatically) or not set
-            if (_textTargets.Count == 0 && _canvas.ActualWidth > 0) CalculateTextTargets();
+                double currentTime = _stopwatch.Elapsed.TotalSeconds;
+                double dt = currentTime - _lastTime;
+                _lastTime = currentTime;
 
-            UpdateLogic();
+                // Cap DeltaTime to prevent explosion after lag spike
+                if (dt > 0.1) dt = 0.1;
+
+                // Normalize to TargetFps (so 1.0 = 1 frame at 60fps)
+                // This allows us to keep using similar magic numbers as before by scaling them
+                double timeFactor = dt * TargetFps * SpeedScale; 
+
+                // Recalculate targets if size changed (dramatically) or not set
+                if (_textTargets.Count == 0 && _canvas.ActualWidth > 0) CalculateTextTargets();
+
+                UpdateLogic(timeFactor, dt);
+            }
+            catch (Exception)
+            {
+                // Fail silently to prevent app crash/freeze
+                // In debug we might want to log this
+            }
         }
 
-        private void UpdateLogic()
+        private void UpdateLogic(double tf, double dtSeconds)
         {
             // 1. Normal Fireworks Launch
-            _timeSinceLastLaunch += 1.0;
-            if (_timeSinceLastLaunch > 45 && _rnd.NextDouble() < 0.1) 
+            _timeSinceLastLaunch += dtSeconds;
+            // Launch slightly less frequently if we are slowing down time
+            if (_timeSinceLastLaunch > (0.8 / SpeedScale) && _rnd.NextDouble() < (0.1 * tf)) 
             {
                 LaunchNormalRocket();
                 _timeSinceLastLaunch = 0;
             }
 
             // 2. Special 2026 Launch
-            _specialTimer += 1.0 / FPS;
+            _specialTimer += dtSeconds;
             if (_specialTimer >= _nextSpecialInterval)
             {
                 LaunchSpecialRocket();
                 _specialTimer = 0;
-                _nextSpecialInterval = _rnd.Next(15, 120);
+                _nextSpecialInterval = _rnd.Next(20, 60); // Reset interval
             }
 
             // 3. Update Particles
@@ -125,29 +155,43 @@ namespace NotNarakaLauncher.App
                 switch (p.Mode)
                 {
                     case ParticleMode.Rocket:
-                        p.X += p.VX;
-                        p.Y += p.VY;
-                        p.VY += 0.05; // Gravity
+                        p.X += p.VX * tf;
+                        p.Y += p.VY * tf;
+                        p.VY += BaseGravity * tf; // Gravity
                         
                         // Explode logic
                         if (p.Target != null) // Special Rocket has a "target" area (center)
                         {
-                            // If reached peak or target Y
-                             if (p.VY >= -0.5) { ExplodeSpecial(p); RemoveParticle(i); continue; }
+                            // If reached peak or target Y roughly
+                             if (p.VY >= -0.5) 
+                             { 
+                                 SafeExplodeSpecial(p); 
+                                 RemoveParticle(i); 
+                                 continue; 
+                             }
                         }
                         else
                         {
-                             if (p.VY >= -0.5 || p.Y < height * 0.2) { ExplodeNormal(p); RemoveParticle(i); continue; }
+                             if (p.VY >= -0.5 || p.Y < height * 0.1) 
+                             { 
+                                 ExplodeNormal(p); 
+                                 RemoveParticle(i); 
+                                 continue; 
+                             }
                         }
                         break;
 
                     case ParticleMode.Spark:
-                        p.X += p.VX;
-                        p.Y += p.VY;
-                        p.VY += 0.1;
-                        p.Alpha -= 0.015;
+                        p.X += p.VX * tf;
+                        p.Y += p.VY * tf;
+                        p.VY += (BaseGravity * 1.5) * tf; // Sprax slightly heavier
+                        p.Alpha -= 0.015 * tf;
+                        if (p.Alpha <= 0) 
+                        { 
+                            RemoveParticle(i); 
+                            continue; 
+                        }
                         p.Element.Opacity = p.Alpha;
-                        if (p.Alpha <= 0 || p.Y > height) { RemoveParticle(i); continue; }
                         break;
 
                     case ParticleMode.seek:
@@ -156,10 +200,17 @@ namespace NotNarakaLauncher.App
                         {
                             double dx = p.Target.Value.X - p.X;
                             double dy = p.Target.Value.Y - p.Y;
-                            p.X += dx * 0.1; // Ease in
-                            p.Y += dy * 0.1;
                             
-                            if (Math.Abs(dx) < 1 && Math.Abs(dy) < 1)
+                            // Framerate independent easing
+                            // Lerp: New = Current + (Target - Current) * factor
+                            // Factor needs to be time based. 
+                            double seekSpeed = 0.1 * tf; 
+                            if (seekSpeed > 0.9) seekSpeed = 0.9; // Clamp
+
+                            p.X += dx * seekSpeed;
+                            p.Y += dy * seekSpeed;
+                            
+                            if (Math.Abs(dx) < 2 && Math.Abs(dy) < 2)
                             {
                                 p.X = p.Target.Value.X;
                                 p.Y = p.Target.Value.Y;
@@ -169,22 +220,40 @@ namespace NotNarakaLauncher.App
                                 ((SolidColorBrush)p.Element.Fill).Color = Colors.Gold;
                             }
                         }
+                        else
+                        {
+                            // Fallback if target lost
+                            p.Mode = ParticleMode.Fade;
+                        }
                         break;
 
                     case ParticleMode.Hold:
-                        p.HoldTime -= 1.0 / FPS;
+                        p.HoldTime -= dtSeconds;
                         if (p.HoldTime <= 0) p.Mode = ParticleMode.Fade;
                         // Glimmer High Opacity for Readability
-                        if (_rnd.NextDouble() < 0.2) p.Element.Opacity = 0.8 + _rnd.NextDouble() * 0.2;
-                        else p.Element.Opacity = 1.0;
+                        if (_rnd.NextDouble() < (0.2 * tf)) 
+                            p.Element.Opacity = 0.8 + _rnd.NextDouble() * 0.2;
+                        else 
+                            p.Element.Opacity = 1.0;
                         break;
 
                     case ParticleMode.Fade:
-                        p.Y += 0.5; // Fall slowly
-                        p.Alpha -= 0.01;
+                        p.Y += 0.5 * tf; // Fall slowly
+                        p.Alpha -= 0.01 * tf;
+                        if (p.Alpha <= 0) 
+                        { 
+                            RemoveParticle(i); 
+                            continue; 
+                        }
                         p.Element.Opacity = p.Alpha;
-                        if (p.Alpha <= 0) { RemoveParticle(i); continue; }
                         break;
+                }
+
+                // Bounds check removal (optimization)
+                if (p.Y > height + 50)
+                {
+                    RemoveParticle(i);
+                    continue;
                 }
 
                 // Render
@@ -201,7 +270,6 @@ namespace NotNarakaLauncher.App
 
         private void LaunchSpecialRocket()
         {
-            // Launch from center to centerish
             LaunchRocket(_canvas.ActualWidth / 2, new Point(_canvas.ActualWidth / 2, _canvas.ActualHeight * 0.3));
         }
 
@@ -215,13 +283,13 @@ namespace NotNarakaLauncher.App
             {
                 X = startX,
                 Y = startY,
-                VX = (_rnd.NextDouble() - 0.5) * 1.0, 
-                VY = -(_rnd.NextDouble() * 4.0 + 10.0), // Fast
+                VX = (_rnd.NextDouble() - 0.5) * 1.5, 
+                VY = -(_rnd.NextDouble() * 4.0 + 11.0), // Initial upward velocity
                 Mode = ParticleMode.Rocket,
                 Color = color,
                 Alpha = 1.0,
                 Target = target,
-                Element = CreateEllipse(4, color)
+                Element = CreateEllipse(4, color) // Slightly larger rocket
             };
             _particles.Add(p);
             _canvas.Children.Add(p.Element);
@@ -229,23 +297,32 @@ namespace NotNarakaLauncher.App
 
         private void ExplodeNormal(FireworkParticle rocket)
         {
-            int count = _rnd.Next(30, 50);
+            int count = _rnd.Next(20, 40); // Fewer particles for performance
             for (int i = 0; i < count; i++) SpawnSpark(rocket, false);
         }
 
-        private void ExplodeSpecial(FireworkParticle rocket)
+        private void SafeExplodeSpecial(FireworkParticle rocket)
         {
-            // Calculate Text Targets again to be sure of size
-            if (_textTargets.Count == 0) CalculateTextTargets();
-            
-            // Spawn 1 particle per target + some extras for flair
-            foreach (var target in _textTargets)
+            try
             {
-                 SpawnSpark(rocket, true, target);
+                // Calculate Text Targets again to be sure of size
+                if (_textTargets.Count == 0) CalculateTextTargets();
+                
+                // Spawn 1 particle per target + some extras for flair
+                // LIMIT the number to prevent freeze if something goes wrong
+                int maxSpawns = 250; 
+                int spawned = 0;
+
+                foreach (var target in _textTargets)
+                {
+                     if (spawned++ > maxSpawns) break;
+                     SpawnSpark(rocket, true, target);
+                }
+                
+                // Extra sparks that fall normally
+                for(int i=0; i<30; i++) SpawnSpark(rocket, false);
             }
-            
-            // Extra sparks that fall normally
-            for(int i=0; i<20; i++) SpawnSpark(rocket, false);
+            catch {}
         }
 
         private void SpawnSpark(FireworkParticle parent, bool isSeeking, Point? target = null)
@@ -272,7 +349,7 @@ namespace NotNarakaLauncher.App
         private void RemoveParticle(int index)
         {
             if (index < 0 || index >= _particles.Count) return;
-            _canvas.Children.Remove(_particles[index].Element);
+            try { _canvas.Children.Remove(_particles[index].Element); } catch { }
             _particles.RemoveAt(index);
         }
 
@@ -291,8 +368,12 @@ namespace NotNarakaLauncher.App
 
         private Color GetRandomColor(bool isSplash)
         {
-            if (isSplash) return _rnd.NextDouble() > 0.5 ? Colors.White : Color.FromRgb(66, 255, 66);
-            var colors = new[] { Colors.Cyan, Colors.Magenta, Colors.Yellow, Colors.Lime, Color.FromRgb(255, 100, 100) };
+            // Splash: Mostly Green/White. Main: Festive.
+            if (isSplash) return _rnd.NextDouble() > 0.7 ? Colors.White : Color.FromRgb(66, 255, 66);
+            var colors = new[] { 
+                Colors.Cyan, Colors.Magenta, Colors.Yellow, Colors.Lime, 
+                Color.FromRgb(255, 80, 80), Colors.Gold 
+            };
             return colors[_rnd.Next(colors.Length)];
         }
 
@@ -304,18 +385,19 @@ namespace NotNarakaLauncher.App
             string[] digit6 = { "111", "100", "111", "101", "111" };
 
             double screenWidth = _canvas.ActualWidth;
-            double screenHeight = _canvas.ActualHeight;
+            
+            // Adjust logic for new Main Window Width (1583)
             bool isSplash = screenWidth < 1000;
             
-            double pixelSize = isSplash ? 5 : 10; 
-            double spacing = isSplash ? 2 : 4;
-            double digitGap = isSplash ? 10 : 20;
+            double pixelSize = isSplash ? 5 : 8; 
+            double spacing = isSplash ? 2 : 3;
+            double digitGap = isSplash ? 12 : 24;
 
             double singleDigitWidth = (3 * pixelSize) + (2 * spacing);
             double totalWidth = (4 * singleDigitWidth) + (3 * digitGap);
 
             double startX = (screenWidth - totalWidth) / 2;
-            double startY = isSplash ? 160 : 60; // Move higher on Main to avoid blocking WebPlayer 
+            double startY = isSplash ? 160 : 80;
 
             AddDigitTargets(digit2, startX, startY, pixelSize, spacing);
             startX += singleDigitWidth + digitGap;
@@ -334,7 +416,7 @@ namespace NotNarakaLauncher.App
                 {
                     if (mask[r][c] == '1')
                     {
-                        double px = x + c * (size + spacing) + (size/2); // Center of pixel
+                        double px = x + c * (size + spacing) + (size/2);
                         double py = y + r * (size + spacing) + (size/2);
                         _textTargets.Add(new Point(px, py));
                     }
