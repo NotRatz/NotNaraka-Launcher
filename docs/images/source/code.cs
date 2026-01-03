@@ -93,14 +93,17 @@ namespace NotNarakaLauncher.App
             _particles.Clear();
         }
 
-        private void OnRendering(object sender, EventArgs e)
+        private void OnRendering(object? sender, EventArgs e)
         {
             if (!_isRunning || _canvas == null) return;
             
             try
             {
                 // Pause logic (basic visibility check)
-                if (_canvas.PresentationSource == null) return;
+                if (PresentationSource.FromVisual(_canvas) == null) return;
+                
+                var win = Window.GetWindow(_canvas);
+                if (win != null && (win.WindowState == WindowState.Minimized || !win.IsVisible)) return;
 
                 double currentTime = _stopwatch.Elapsed.TotalSeconds;
                 double dt = currentTime - _lastTime;
