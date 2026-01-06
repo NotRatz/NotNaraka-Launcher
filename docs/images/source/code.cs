@@ -21,12 +21,7 @@ namespace NotNarakaLauncher.App
         // Particles
         private List<FireworkParticle> _particles = new();
         private double _timeSinceLastLaunch = 0;
-        
-        // 2026 Logic
-        private List<Point> _textTargets = new();
-        private double _specialTimer = 0;
-        private double _nextSpecialInterval = 15; // Seconds
-        
+               
         // Configuration
         private const double TargetFps = 60.0;
         private const double BaseGravity = 0.05;
