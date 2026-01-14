@@ -36,7 +36,7 @@
             /* Overlay gradient on top of the image */
             background-image:
                 linear-gradient(to bottom, rgba(15, 15, 19, 0.85), rgba(15, 15, 19, 0.95)),
-                url('background.png');
+                url('https://raw.githubusercontent.com/NotRatz/NotNaraka/refs/heads/main/docs/viewbackground.webp');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -295,7 +295,8 @@
 
         async function load() {
             try {
-                const res = await fetch(API_URL);
+                // Add timestamp to prevent caching
+                const res = await fetch(API_URL + '?t=' + Date.now());
                 const data = await res.json();
                 const tbody = document.getElementById('list');
 
