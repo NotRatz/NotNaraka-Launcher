@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotNaraka - Wall of Shame</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #eee;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #FF5252;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #888;
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            max-width: 800px;
+            border-collapse: collapse;
+            background-color: #1E1E1E;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        th {
+            background-color: #252525;
+            color: #FF5252;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover {
+            background-color: #2A2A2A;
+        }
+        .reason {
+            color: #FFB74D;
+            font-weight: bold;
+        }
+        .uid {
+            font-family: monospace;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>WALL OF SHAME</h1>
+    <div class="subtitle">Players banned for violating fair play integrity.</div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>IGN</th>
+                <th>UID</th>
+                <th>Reason</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody id="list">
+            <tr>
+                <td colspan="4" style="text-align:center; color:#666;">Loading justice...</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        const API_URL = "https://notnaraka-api.bmcnaughton0.workers.dev/cheaters";
+
+        async function load() {
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+                const tbody = document.getElementById('list');
+                
+                if (data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#4CAF50;">No cheaters detected yet!</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = data.map(p => `
+                    <tr>
+                        <td style="font-weight:bold">${p.ign || 'Unknown'}</td>
+                        <td class="uid">${p.uid || '---'}</td>
+                        <td class="reason">${p.reason}</td>
+                        <td style="font-size:12px; color:#888;">${new Date(p.detected_at).toLocaleDateString()}</td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                document.getElementById('list').innerHTML = `<tr><td colspan="4" style="text-align:center; color:#FF5252;">Failed to load data.</td></tr>`;
+            }
+        }
+
+        load();
+    </script>
+</body>
+</html>
