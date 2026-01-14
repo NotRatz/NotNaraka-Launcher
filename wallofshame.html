@@ -10,6 +10,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
+    <!-- Favicon (Shield Emoji) -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
     <style>
         :root {
             --primary: #FF4757;
@@ -30,9 +33,13 @@
         body {
             font-family: 'Outfit', sans-serif;
             background-color: var(--bg-dark);
+            /* Overlay gradient on top of the image */
             background-image:
-                radial-gradient(circle at 10% 20%, rgba(255, 71, 87, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(100, 50, 255, 0.1) 0%, transparent 40%);
+                linear-gradient(to bottom, rgba(15, 15, 19, 0.85), rgba(15, 15, 19, 0.95)),
+                url('background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -44,6 +51,7 @@
 
         /* Ambient Background Standard */
         .ambient-noise {
+            /* Optional noise overlay for texture */
             position: fixed;
             top: 0;
             left: 0;
@@ -51,7 +59,7 @@
             height: 100%;
             background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
             pointer-events: none;
-            z-index: -1;
+            z-index: 0;
         }
 
         /* Container */
