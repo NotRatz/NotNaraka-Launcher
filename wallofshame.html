@@ -319,6 +319,7 @@
                                 <div class="avatar-placeholder">${(p.ign || '?').charAt(0).toUpperCase()}</div>
                                 ${p.ign || 'Unknown'}
                                 <span class="badge badge-detected">DETECTED</span>
+                                ${p.count > 1 ? `<span class="badge badge-repeat" style="background:rgba(255, 165, 0, 0.15); color:#FFA500; border:1px solid rgba(255, 165, 0, 0.3); margin-left:5px;">REPEAT OFFENDER (x${p.count})</span>` : ''}
                             </div>
                         </td>
                         <td class="col-uid mobile-hide">${p.uid || '---'}</td>
