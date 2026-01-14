@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +16,17 @@
             flex-direction: column;
             align-items: center;
         }
+
         h1 {
             color: #FF5252;
             margin-bottom: 10px;
         }
+
         .subtitle {
             color: #888;
             margin-bottom: 30px;
         }
+
         table {
             width: 100%;
             max-width: 800px;
@@ -30,13 +34,16 @@
             background-color: #1E1E1E;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
-        th, td {
+
+        th,
+        td {
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid #333;
         }
+
         th {
             background-color: #252525;
             color: #FF5252;
@@ -44,25 +51,30 @@
             font-size: 12px;
             letter-spacing: 1px;
         }
+
         tr:last-child td {
             border-bottom: none;
         }
+
         tr:hover {
             background-color: #2A2A2A;
         }
+
         .reason {
             color: #FFB74D;
             font-weight: bold;
         }
+
         .uid {
             font-family: monospace;
             color: #666;
         }
     </style>
 </head>
+
 <body>
     <h1>WALL OF SHAME</h1>
-    <div class="subtitle">Players banned for violating fair play integrity.</div>
+    <div class="subtitle">Players detected violating fair play integrity. (Detection Only - Not Bans)</div>
 
     <table>
         <thead>
@@ -88,7 +100,7 @@
                 const res = await fetch(API_URL);
                 const data = await res.json();
                 const tbody = document.getElementById('list');
-                
+
                 if (data.length === 0) {
                     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#4CAF50;">No cheaters detected yet!</td></tr>';
                     return;
@@ -110,4 +122,5 @@
         load();
     </script>
 </body>
+
 </html>
