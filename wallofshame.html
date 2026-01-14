@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotNaraka | Detection Log</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF4757;
+            --primary-glow: rgba(255, 71, 87, 0.4);
+            --bg-dark: #0F0F13;
+            --bg-card: rgba(30, 30, 35, 0.6);
+            --text-main: #FFFFFF;
+            --text-dim: #A0A0A0;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(255, 71, 87, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(100, 50, 255, 0.1) 0%, transparent 40%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Standard */
+        .ambient-noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #FFF 0%, #AAA 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .subtitle {
+            font-family: 'Space Mono', monospace;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-block;
+            padding: 8px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Glass Card */
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 24px;
+            color: var(--text-dim);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        td {
+            padding: 24px;
+            border-bottom: 1px solid var(--glass-border);
+            transition: background 0.2s;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr {
+            transition: all 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Columns */
+        .col-ign {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #FFF;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-placeholder {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #333, #444);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #777;
+            font-weight: bold;
+        }
+
+        .col-uid {
+            font-family: 'Space Mono', monospace;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .col-reason {
+            color: #FFB74D;
+        }
+
+        .col-date {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        /* Status Badge */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-detected {
+            background: rgba(255, 71, 87, 0.15);
+            color: #FF4757;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        /* Animations */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .row-enter {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            th,
+            td {
+                padding: 16px;
+            }
+
+            .col-uid {
+                display: none;
+            }
+
+            /* Hide UID on mobile to save space */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="ambient-noise"></div>
+
+    <div class="container">
+        <header>
+            <h1>Detection Log</h1>
+            <div class="subtitle">NotNaraka Integrity System</div>
+        </header>
+
+        <div class="glass-panel">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="35%">User</th>
+                        <th width="20%" class="mobile-hide">UID</th>
+                        <th width="30%">Violation</th>
+                        <th width="15%" style="text-align:right">Date</th>
+                    </tr>
+                </thead>
+                <tbody id="list">
+                    <!-- Loading State -->
+                    <tr>
+                        <td colspan="4" style="text-align:center; padding: 60px;">
+                            <div style="font-family:'Space Mono'; color:#555; animation: pulse 1.5s infinite;">
+                                INITIALIZING UPLINK...</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="text-align:center; margin-top:40px; color:#444; font-size:0.8rem; font-family:'Space Mono'">
+            SYSTEM STATUS: <span style="color:#4CAF50">ACTIVE</span> &bull; SYNC: AUTO
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://notnaraka-api.bmcnaughton0.workers.dev/cheaters";
+
+        async function load() {
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+                const tbody = document.getElementById('list');
+
+                if (data.length === 0) {
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="4" style="text-align:center; padding: 60px;">
+                                <div style="font-size:2rem; margin-bottom:10px;">🛡️</div>
+                                <div style="color:#666;">No active threats detected.</div>
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                tbody.innerHTML = data.map((p, index) => `
+                    <tr class="row-enter" style="animation-delay: ${index * 0.1}s">
+                        <td>
+                            <div class="col-ign">
+                                <div class="avatar-placeholder">${(p.ign || '?').charAt(0).toUpperCase()}</div>
+                                ${p.ign || 'Unknown'}
+                                <span class="badge badge-detected">DETECTED</span>
+                            </div>
+                        </td>
+                        <td class="col-uid mobile-hide">${p.uid || '---'}</td>
+                        <td class="col-reason">${p.reason || 'Integrity Violation'}</td>
+                        <td class="col-date">${new Date(p.detected_at).toLocaleDateString()}</td>
+                    </tr>
+                `).join('');
+            } catch (e) {
+                document.getElementById('list').innerHTML = `
+                    <tr>
+                        <td colspan="4" style="text-align:center; padding: 40px; color:#FF4757;">
+                            CONNECTION ERROR<br><span style="font-size:0.8rem; opacity:0.7">Could not retrieve logs.</span>
+                        </td>
+                    </tr>`;
+            }
+        }
+
+        load();
+    </script>
+</body>
+
+</html>
