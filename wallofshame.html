@@ -402,16 +402,19 @@
         function formatDetails(details) {
             if (!details) return "Confirmed third-party tool interaction identified in secure environment. Integrity violation recorded.";
 
+            // Alias internal terms
+            const alias = (s) => s.replace(/cyzb|cyza/gi, "MicroAcceleration User");
+
             // If it's the raw_report (JSON string), try to extract clean messages
             try {
                 const parsed = JSON.parse(details);
                 if (parsed.SecurityFlags && parsed.SecurityFlags.length > 0) {
-                    return parsed.SecurityFlags.join(", ");
+                    return alias(parsed.SecurityFlags.join(", "));
                 }
             } catch (e) {
                 // Just return the text if not JSON
             }
-            return details;
+            return alias(details);
         }
 
         async function load() {
