@@ -241,6 +241,12 @@
             font-weight: 700;
             color: #FFF;
             letter-spacing: -0.5px;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .ign-link:hover .ign {
+            color: var(--accent);
+            transform: translateX(4px);
         }
 
         .uid-label {
@@ -442,6 +448,21 @@
                     const hue = (p.ign || "").split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) % 360;
                     const avatarStyle = `background: linear-gradient(135deg, hsl(${hue}, 60%, 40%) 0%, hsl(${hue + 40}, 60%, 20%) 100%)`;
 
+                    // Steam Link logic
+                    let profileLink = "#";
+                    let isSteam = false;
+                    const uid = p.uid || "";
+
+                    if (uid.startsWith("765611") && uid.length === 17) {
+                        // Standard SteamID64
+                        profileLink = `https://steamcommunity.com/profiles/${uid}`;
+                        isSteam = true;
+                    } else if (uid.match(/^\d+$/) && uid.length < 12) {
+                        // SteamID3 format as requested: [U:1:ACCOUNT_ID]
+                        profileLink = `https://steamcommunity.com/profiles/[U:1:${uid}]`;
+                        isSteam = true;
+                    }
+
                     return `
                     <tr style="animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: ${index * 0.05}s; opacity: 0;">
                         <td>
@@ -451,7 +472,9 @@
                                     <div class="avatar-bg" style="${avatarStyle}">${initial}</div>
                                 </div>
                                 <div class="user-info">
-                                    <div class="ign">${p.ign || 'Restricted_Access'}</div>
+                                    <a href="${profileLink}" target="_blank" class="ign-link" style="text-decoration:none;">
+                                        <div class="ign">${p.ign || 'Restricted_Access'} ${isSteam ? '🔗' : ''}</div>
+                                    </a>
                                     <div class="uid-label">ID_${p.uid || 'XXXXXXXX'}</div>
                                     <div class="status-badge badge-red">DETECTION_ACTIVE</div>
                                 </div>
