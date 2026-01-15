@@ -4,24 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NotNaraka | Detection Log</title>
+    <title>NotNaraka | Integrity Log</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap"
         rel="stylesheet">
-    <!-- Favicon (Shield Emoji) -->
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
     <style>
         :root {
             --primary: #FF4757;
             --primary-glow: rgba(255, 71, 87, 0.4);
-            --bg-dark: #0F0F13;
-            --bg-card: rgba(30, 30, 35, 0.6);
+            --accent: #00D2FF;
+            --accent-glow: rgba(0, 210, 255, 0.3);
+            --bg-dark: #0A0A0E;
+            --bg-card: rgba(18, 18, 22, 0.8);
             --text-main: #FFFFFF;
-            --text-dim: #A0A0A0;
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-dim: #94A3B8;
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --premium-gradient: linear-gradient(135deg, #FF4757 0%, #FF6B81 100%);
+            --safe-gradient: linear-gradient(135deg, #2ED573 0%, #7BED9F 100%);
         }
 
         * {
@@ -33,9 +36,9 @@
         body {
             font-family: 'Outfit', sans-serif;
             background-color: var(--bg-dark);
-            /* Overlay gradient on top of the image */
             background-image:
-                linear-gradient(to bottom, rgba(15, 15, 19, 0.3), rgba(15, 15, 19, 0.7)),
+                radial-gradient(circle at 50% 0%, rgba(255, 71, 87, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(0, 210, 255, 0.05) 0%, transparent 40%),
                 url('https://raw.githubusercontent.com/NotRatz/NotNaraka/refs/heads/main/docs/viewbackground.webp');
             background-size: cover;
             background-position: center;
@@ -45,176 +48,72 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             overflow-x: hidden;
         }
 
-        /* Ambient Background Standard */
         .ambient-noise {
-            /* Optional noise overlay for texture */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
             pointer-events: none;
             z-index: 0;
         }
 
-        /* Container */
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1100px;
             z-index: 1;
         }
 
-        /* Header */
         header {
             text-align: center;
-            margin-bottom: 60px;
-            position: relative;
+            margin-bottom: 70px;
         }
 
         h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            background: linear-gradient(135deg, #FFF 0%, #AAA 100%);
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #FFFFFF 0%, #94A3B8 100%);
             -webkit-background-clip: text;
-            background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
             text-transform: uppercase;
-            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            margin-bottom: 15px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
         }
 
         .subtitle {
             font-family: 'Space Mono', monospace;
             color: var(--text-dim);
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            display: inline-block;
-            padding: 8px 16px;
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
+            padding: 10px 24px;
+            border-radius: 100px;
             background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(5px);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            display: inline-block;
         }
 
-        /* Glass Card */
-        .glass-panel {
+        .glass-card {
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(40px);
             border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            box-shadow:
-                0 20px 50px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
             overflow: hidden;
-            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            animation: cardAppear 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Table Styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th {
-            text-align: left;
-            padding: 24px;
-            color: var(--text-dim);
-            font-family: 'Space Mono', monospace;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            border-bottom: 1px solid var(--glass-border);
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        td {
-            padding: 24px;
-            border-bottom: 1px solid var(--glass-border);
-            transition: background 0.2s;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tbody tr {
-            transition: all 0.2s ease;
-        }
-
-        tbody tr:hover {
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        /* Columns */
-        .col-ign {
-            font-weight: 600;
-            font-size: 1.1rem;
-            color: #FFF;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .avatar-placeholder {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #333, #444);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #777;
-            font-weight: bold;
-        }
-
-        .col-uid {
-            font-family: 'Space Mono', monospace;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .col-reason {
-            color: #FFB74D;
-        }
-
-        .col-date {
-            color: var(--text-dim);
-            font-size: 0.9rem;
-            text-align: right;
-        }
-
-        /* Status Badge */
-        .badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge-detected {
-            background: rgba(255, 71, 87, 0.15);
-            color: #FF4757;
-            border: 1px solid rgba(255, 71, 87, 0.3);
-            box-shadow: 0 0 10px var(--primary-glow);
-        }
-
-        /* Animations */
-        @keyframes slideUp {
+        @keyframes cardAppear {
             from {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: translateY(30px);
             }
 
             to {
@@ -223,33 +122,236 @@
             }
         }
 
-        .row-enter {
-            animation: fadeIn 0.5s ease forwards;
-            opacity: 0;
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
         }
 
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
+        th {
+            text-align: left;
+            padding: 24px 32px;
+            color: var(--text-dim);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        td {
+            padding: 28px 32px;
+            border-bottom: 1px solid var(--glass-border);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr {
+            transition: background 0.3s ease;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* User Profile Component */
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 52px;
+            height: 52px;
+            flex-shrink: 0;
+        }
+
+        .avatar-bg {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            /* Square with rounded corners for a modern feel */
+            background: linear-gradient(135deg, #1A1A1E 0%, #121215 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #FFF;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .avatar-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.1), transparent);
+        }
+
+        .avatar-pulse {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 18px;
+            background: var(--primary-glow);
+            z-index: -1;
+            opacity: 0.5;
+            animation: pulse-ring 2s infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.2;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0.5;
             }
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .ign {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #FFF;
+            letter-spacing: -0.5px;
+        }
+
+        .uid-label {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            opacity: 0.6;
+        }
+
+        /* Violation Details */
+        .violation-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .violation-title {
+            color: #FFB74D;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .violation-details {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.4;
+            max-width: 400px;
+        }
+
+        /* Status & Badges */
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-red {
+            background: rgba(255, 71, 87, 0.1);
+            color: #FF4757;
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            box-shadow: 0 0 15px rgba(255, 71, 87, 0.1);
+        }
+
+        .repeat-offender {
+            color: #FFA502;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .col-date {
+            text-align: right;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 80px;
+            gap: 20px;
+        }
+
+        .shimmer {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.05);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .mobile-hide {
+                display: none;
+            }
+
             h1 {
                 font-size: 2.5rem;
             }
 
-            th,
-            td {
-                padding: 16px;
+            td,
+            th {
+                padding: 20px;
             }
 
-            .col-uid {
-                display: none;
+            .violation-details {
+                max-width: 200px;
             }
-
-            /* Hide UID on mobile to save space */
         }
     </style>
 </head>
@@ -259,85 +361,133 @@
 
     <div class="container">
         <header>
-            <h1>Detection Log</h1>
-            <div class="subtitle">NotNaraka Integrity System</div>
+            <h1>Integrity Log</h1>
+            <div class="subtitle">Neural Detection Feed 1.0</div>
         </header>
 
-        <div class="glass-panel">
+        <div class="glass-card">
             <table>
                 <thead>
                     <tr>
-                        <th width="35%">User</th>
-                        <th width="20%" class="mobile-hide">UID</th>
-                        <th width="30%">Violation</th>
-                        <th width="15%" style="text-align:right">Date</th>
+                        <th width="35%">Identified Subject</th>
+                        <th width="45%">Security Event & Causation</th>
+                        <th width="20%" style="text-align:right">Detection Time</th>
                     </tr>
                 </thead>
                 <tbody id="list">
-                    <!-- Loading State -->
                     <tr>
-                        <td colspan="4" style="text-align:center; padding: 60px;">
-                            <div style="font-family:'Space Mono'; color:#555; animation: pulse 1.5s infinite;">
-                                INITIALIZING UPLINK...</div>
+                        <td colspan="3">
+                            <div class="loader">
+                                <div class="shimmer"></div>
+                                <div
+                                    style="font-family:'Space Mono'; color:var(--text-dim); font-size: 0.8rem; letter-spacing: 2px;">
+                                    SYNCING WITH BACKEND...</div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div style="text-align:center; margin-top:40px; color:#444; font-size:0.8rem; font-family:'Space Mono'">
-            SYSTEM STATUS: <span style="color:#4CAF50">ACTIVE</span> &bull; SYNC: AUTO
+        <div
+            style="text-align:center; margin-top:50px; color:var(--text-dim); font-size:0.75rem; font-family:'Space Mono'; opacity:0.5;">
+            NODE: CLOUDFLARE_EDGE_01 &bull; PROTOCOL: SECURE_WEBSOCKET &bull; LAST_UPDATE: <span
+                id="last-update">--:--:--</span>
         </div>
     </div>
 
     <script>
         const API_URL = "https://notnaraka-api.bmcnaughton0.workers.dev/cheaters";
 
+        function formatDetails(details) {
+            if (!details) return "Anomaly detected in standard operating environment. Possible third-party interference.";
+
+            // If it's the raw_report (JSON string), try to extract clean messages
+            try {
+                const parsed = JSON.parse(details);
+                if (parsed.SecurityFlags && parsed.SecurityFlags.length > 0) {
+                    return parsed.SecurityFlags.join(", ");
+                }
+            } catch (e) {
+                // Just return the text if not JSON
+            }
+            return details;
+        }
+
         async function load() {
             try {
-                // Add timestamp to prevent caching
                 const res = await fetch(API_URL + '?t=' + Date.now());
                 const data = await res.json();
                 const tbody = document.getElementById('list');
+                document.getElementById('last-update').innerText = new Date().toLocaleTimeString();
 
                 if (data.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="4" style="text-align:center; padding: 60px;">
-                                <div style="font-size:2rem; margin-bottom:10px;">🛡️</div>
-                                <div style="color:#666;">No active threats detected.</div>
+                            <td colspan="3" style="text-align:center; padding: 100px;">
+                                <div style="font-size:3rem; margin-bottom:20px; filter: grayscale(1);">🛡️</div>
+                                <div style="font-family:'Space Mono'; color:var(--text-dim);">SYSTEM INTEGRITY VERIFIED. NO DETECTIONS.</div>
                             </td>
                         </tr>
                     `;
                     return;
                 }
 
-                tbody.innerHTML = data.map((p, index) => `
-                    <tr class="row-enter" style="animation-delay: ${index * 0.1}s">
+                tbody.innerHTML = data.map((p, index) => {
+                    const initial = (p.ign || "?").charAt(0).toUpperCase();
+                    // Generate a semi-random but stable gradient based on name
+                    const hue = (p.ign || "").split("").reduce((acc, char) => acc + char.charCodeAt(0), 0) % 360;
+                    const avatarStyle = `background: linear-gradient(135deg, hsl(${hue}, 60%, 40%) 0%, hsl(${hue + 40}, 60%, 20%) 100%)`;
+
+                    return `
+                    <tr style="animation: cardAppear 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; animation-delay: ${index * 0.05}s; opacity: 0;">
                         <td>
-                            <div class="col-ign">
-                                <div class="avatar-placeholder">${(p.ign || '?').charAt(0).toUpperCase()}</div>
-                                ${p.ign || 'Unknown'}
-                                <span class="badge badge-detected">DETECTED</span>
-                                ${p.count > 1 ? `<span class="badge badge-repeat" style="background:rgba(255, 165, 0, 0.15); color:#FFA500; border:1px solid rgba(255, 165, 0, 0.3); margin-left:5px;">REPEAT OFFENDER (x${p.count})</span>` : ''}
+                            <div class="user-cell">
+                                <div class="avatar-container">
+                                    <div class="avatar-pulse"></div>
+                                    <div class="avatar-bg" style="${avatarStyle}">${initial}</div>
+                                </div>
+                                <div class="user-info">
+                                    <div class="ign">${p.ign || 'Restricted_Access'}</div>
+                                    <div class="uid-label">ID_${p.uid || 'XXXXXXXX'}</div>
+                                    <div class="status-badge badge-red">DETECTION_ACTIVE</div>
+                                </div>
                             </div>
                         </td>
-                        <td class="col-uid mobile-hide">${p.uid || '---'}</td>
-                        <td class="col-reason">${p.reason || 'Integrity Violation'}</td>
-                        <td class="col-date">${new Date(p.detected_at).toLocaleDateString()}</td>
+                        <td>
+                            <div class="violation-cell">
+                                <div class="violation-title">
+                                    <span>⚠️</span>
+                                    ${p.reason || 'Integrity Violation'}
+                                </div>
+                                <div class="violation-details">
+                                    ${formatDetails(p.details)}
+                                </div>
+                                ${p.count > 1 ? `
+                                    <div class="repeat-offender">
+                                        <span>🔄</span> RECURRING ANOMALY DETECTED (x${p.count})
+                                    </div>` : ''}
+                            </div>
+                        </td>
+                        <td class="col-date">
+                            <div style="font-weight:700; color: #FFF;">${new Date(p.detected_at).toLocaleDateString()}</div>
+                            <div style="font-size:0.7rem; opacity:0.6;">${new Date(p.detected_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} UTC</div>
+                        </td>
                     </tr>
-                `).join('');
+                `}).join('');
             } catch (e) {
                 document.getElementById('list').innerHTML = `
                     <tr>
-                        <td colspan="4" style="text-align:center; padding: 40px; color:#FF4757;">
-                            CONNECTION ERROR<br><span style="font-size:0.8rem; opacity:0.7">Could not retrieve logs.</span>
+                        <td colspan="3" style="text-align:center; padding: 60px; color:#FF4757; font-family:'Space Mono';">
+                            CRITICAL_UPLINK_FAILURE: CANNOT ESTABLISH SECURE LINK
                         </td>
                     </tr>`;
             }
         }
 
         load();
+        // Refresh every 60s
+        setInterval(load, 60000);
     </script>
 </body>
 
