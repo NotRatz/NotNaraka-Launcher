@@ -1,100 +1,106 @@
 {
   "streams": [
     {
-      "title": "Ratz Coming Back Stream?!",
+      "title": "Ratz is Back?!",
       "description": "Strive's Streamer in Pain",
       "channel": "NotRatz",
       "url": "https://www.twitch.tv/NotRatz"
     },
     {
-      "title": "Perfection ;3",
+      "title": "iCream's Sweet Plays",
       "description": "Um yeah hehe",
       "channel": "iCream",
       "url": "https://www.twitch.tv/icream"
     },
     {
-      "title": "Usually flaming EU",
+      "title": "Averse — EU's Most Feared",
       "description": "Too many Rank #1s to mention",
       "channel": "Averse",
       "url": "https://www.twitch.tv/averse"
     },
     {
-      "title": "1v1s & 3v3s",
-      "description": "just a regular guy who produces music and plays video games.",
+      "title": "Doma's Arena",
+      "description": "Music producer by day, fighter by night.",
       "channel": "prodbydoma",
       "url": "https://twitch.tv/prodbydoma"
     },
     {
-      "title": "STR Skynyx's Superiority",
+      "title": "Skynyx — STR's Finest",
       "description": "The entertainment of everything you wish!",
       "channel": "Skynyx",
       "url": "https://www.twitch.tv/skynyx"
     },
     {
-      "title": "STR German Suprise, Rowan",
+      "title": "Rowan — STR's German Surprise",
       "description": "Baguette",
       "channel": "ItzzRowan",
       "url": "https://www.twitch.tv/ItzzRowan"
     },
     {
-      "title": "Sebguy's Casting?!",
+      "title": "Sebguy's Tournament Cast",
       "description": "Pro commentary and tournament coverage!",
       "channel": "sebguy32",
       "url": "https://www.twitch.tv/sebguy32"
     },
     {
-      "title": "Pure Numzinema - Numza's Phat Wins",
+      "title": "Numza's Highlight Reel",
       "description": "Watch Numza dominate with epic gameplay!",
       "channel": "Numzzza",
       "url": "https://www.twitch.tv/Numzzza"
     },
     {
-      "title": "Let's go ExcellentErah!",
+      "title": "ExcellentErah — The OG",
       "description": "The Old-School Best Friend who I miss!",
       "channel": "ExcellentErah",
       "url": "https://www.twitch.tv/ExcellentErah"
-    },    
+    },
     {
-      "title": "Learn from the best! Hypernova Has Tricks",
+      "title": "HyperNova's Tech Lab",
       "description": "Master advanced techniques and combos!",
       "channel": "HyperNova",
       "url": "https://www.twitch.tv/HyperNova"
     },
     {
-      "title": "C7SPER Terrorizing NA's Finest",
+      "title": "C7SPER — NA's Nightmare",
       "description": "Top tier competitive gameplay!",
       "channel": "c7sper",
       "url": "https://www.twitch.tv/c7sper"
     },
     {
-      "title": "Making full use of jiggle physics, gooning to Lannie",
+      "title": "Snakeyy's Full-Kebab Energy",
       "description": "No-Mic Low-Mental Medium-FPS High-Ping Full-Kebab",
       "channel": "snakeyy13",
       "url": "https://www.twitch.tv/snakeyy13"
     },
     {
-      "title": "Evely somehow flames me 24/7",
+      "title": "Evely — Flaming Everyone 24/7",
       "description": "Come watch the one girl who always is mean to me.",
       "channel": "itsevely",
       "url": "https://www.twitch.tv/itsevely"
     },
     {
-      "title": "BinWaggen's Catboy Dojo Sesh",
+      "title": "BinWaggen's Catboy Dojo",
       "description": "Baby boy Bin plays Nawaka",
       "channel": "binlaggen",
       "url": "https://www.twitch.tv/binlaggen"
     },
     {
-      "title": "玩了三年国服 第一次来欧服试水",
+      "title": "zzjh4x — 三年国服来欧服",
       "description": "Blank",
       "channel": "zzjh4x",
       "url": "https://www.twitch.tv/zzjh4x"
     },
     {
-      "title": "NarakaBladepoint Official's Stream",
+      "title": "NARAKA Official Stream",
       "description": "Official NARAKA content and updates!",
       "channel": "NarakaBladepoint",
       "url": "https://www.twitch.tv/NarakaBladepoint"
+    },
+    {
+      "title": "Blue Squadron Takes Flight",
+      "description": "Competitive gameplay and good vibes!",
+      "channel": "Blue_Squadron",
+      "url": "https://www.twitch.tv/Blue_Squadron"
     }
   ],
   "news": [
