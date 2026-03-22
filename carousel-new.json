@@ -13,7 +13,7 @@
       "url": "https://www.twitch.tv/icream"
     },
     {
-      "title": "Averse — EU's Most Feared",
+      "title": "Averse - #1 in everything",
       "description": "Too many Rank #1s to mention",
       "channel": "Averse",
       "url": "https://www.twitch.tv/averse"
@@ -25,13 +25,19 @@
       "url": "https://twitch.tv/prodbydoma"
     },
     {
-      "title": "Skynyx — STR's Finest",
+      "title": "Blue Squadron Takes Flight",
+      "description": "Competitive gameplay and good vibes!",
+      "channel": "Blue_Squadron",
+      "url": "https://www.twitch.tv/Blue_Squadron"
+    },
+    {
+      "title": "Skynyx - STR's Finest",
       "description": "The entertainment of everything you wish!",
       "channel": "Skynyx",
       "url": "https://www.twitch.tv/skynyx"
     },
     {
-      "title": "Rowan — STR's German Surprise",
+      "title": "Rowan - STR's German Surprise",
       "description": "Baguette",
       "channel": "ItzzRowan",
       "url": "https://www.twitch.tv/ItzzRowan"
@@ -49,7 +55,7 @@
       "url": "https://www.twitch.tv/Numzzza"
     },
     {
-      "title": "ExcellentErah — The OG",
+      "title": "ExcellentErah - The OG",
       "description": "The Old-School Best Friend who I miss!",
       "channel": "ExcellentErah",
       "url": "https://www.twitch.tv/ExcellentErah"
@@ -61,7 +67,7 @@
       "url": "https://www.twitch.tv/HyperNova"
     },
     {
-      "title": "C7SPER — NA's Nightmare",
+      "title": "C7SPER - NA's Nightmare",
       "description": "Top tier competitive gameplay!",
       "channel": "c7sper",
       "url": "https://www.twitch.tv/c7sper"
@@ -73,7 +79,7 @@
       "url": "https://www.twitch.tv/snakeyy13"
     },
     {
-      "title": "Evely — Flaming Everyone 24/7",
+      "title": "Evely - Flaming Everyone 24/7",
       "description": "Come watch the one girl who always is mean to me.",
       "channel": "itsevely",
       "url": "https://www.twitch.tv/itsevely"
@@ -85,7 +91,7 @@
       "url": "https://www.twitch.tv/binlaggen"
     },
     {
-      "title": "zzjh4x — 三年国服来欧服",
+      "title": "zzjh4x - 三年国服来欧服",
       "description": "Blank",
       "channel": "zzjh4x",
       "url": "https://www.twitch.tv/zzjh4x"
@@ -95,12 +101,6 @@
       "description": "Official NARAKA content and updates!",
       "channel": "NarakaBladepoint",
       "url": "https://www.twitch.tv/NarakaBladepoint"
-    },
-    {
-      "title": "Blue Squadron Takes Flight",
-      "description": "Competitive gameplay and good vibes!",
-      "channel": "Blue_Squadron",
-      "url": "https://www.twitch.tv/Blue_Squadron"
     }
   ],
   "news": [
