@@ -13,18 +13,6 @@
       "url": "https://www.twitch.tv/icream"
     },
     {
-      "title": "Averse - #1 in everything",
-      "description": "Too many Rank #1s to mention",
-      "channel": "Averse",
-      "url": "https://www.twitch.tv/averse"
-    },
-    {
-      "title": "Doma's Arena",
-      "description": "Music producer by day, fighter by night.",
-      "channel": "prodbydoma",
-      "url": "https://twitch.tv/prodbydoma"
-    },
-    {
       "title": "REDACTED BY SHU-SHU",
       "description": "REDACTED BY SHU-SHU",
       "channel": "ghostelectricity",
@@ -35,6 +23,24 @@
       "description": "Controller Coping on MnK!",
       "channel": "dialytics",
       "url": "https://www.twitch.tv/dialytics"
+    },
+    {
+      "title": "Mytch",
+      "description": "Chillin, vibin, snackin",
+      "channel": "mitchbrisson",
+      "url": "https://www.twitch.tv/mitchbrisson"
+    },
+    {
+      "title": "Averse - #1 in everything",
+      "description": "Too many Rank #1s to mention",
+      "channel": "Averse",
+      "url": "https://www.twitch.tv/averse"
+    },
+    {
+      "title": "Doma's Arena",
+      "description": "Music producer by day, fighter by night.",
+      "channel": "prodbydoma",
+      "url": "https://twitch.tv/prodbydoma"
     },
     {
       "title": "Skynyx - STR's Finest",
